@@ -1,7 +1,6 @@
 import * as React from 'react'
 import './styles.css'
-import logo from '../../media/z-logo.svg'
-import { Container, Grid, TextField, Typography, Button } from '@material-ui/core'
+import { Container, Grid, Typography } from '@material-ui/core'
 
 export class ErrorPage extends React.Component<any, any> {
 
