@@ -26,6 +26,7 @@ export class LoginPage extends React.Component<any, any> {
                                 label="Password"
                                 margin="normal"
                                 variant="outlined"
+                                type="password"
                             />
                         </Grid>
                         <Grid item xs={12}>
