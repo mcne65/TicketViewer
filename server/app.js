@@ -3,17 +3,17 @@ const app = express()
 const port = 3000
 const fetch = require('node-fetch')
 const base64 = require('base-64')
-global.Headers = fetch.Headerss
 
+const username = ''
+const password = 's'
 
 app.get('/', (req, res) => {
     const apiUrl = 'https://rozajaybird.zendesk.com/api/v2/requests.json'
     fetch(apiUrl, {
         method:'GET',
-        headers: new Headers ({
-            'Authorization': 'Basic ' + base64.encode(username + ":" + password),
-            'Content-Type': 'application/json'
-        })
+        headers: {
+            'Authorization': 'Basic ' + base64.encode(username + ":" + password)
+        }
     })
     .then(res => res.json())
     .then(data => {
