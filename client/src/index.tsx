@@ -6,19 +6,10 @@ import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux'
 import { InitialState } from './redux/state/InitialState'
-
-function testReducer(state = {isUserValid:true}, action:any){
-    switch(action.type) {
-        case 'ENABLE_ERROR_PAGE':
-            return {...state, isUserValid: false}
-        default:
-            return state
-    }
-}
-
+import { rootReducer } from './redux/reducers/index'
 
 ReactDOM.render(
-<Provider store={createStore(testReducer)}>
+<Provider store={createStore(rootReducer)}>
 <App />
 </Provider>
 , document.getElementById('root'));
