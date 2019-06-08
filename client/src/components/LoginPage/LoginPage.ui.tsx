@@ -14,6 +14,8 @@ interface ILoginPageState {
 
 interface ILoginPageProps {
     enableErrorPage: () => void
+    updateTicketTable: (content:any) => void
+    tickets: any
 }
 
 class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
@@ -41,7 +43,6 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
     }
 
     handleOnSignin(event: React.SyntheticEvent){
-        console.log(this.state)
         fetch("http://localhost:5000/")
         .then(res => res.json())
         .then(res => {
@@ -49,13 +50,14 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
             if (res.data.error === "Couldn't authenticate you"){
                 this.props.enableErrorPage()
             } else {
-                // this.props.enableErrorPage()
+                this.props.updateTicketTable(res.data.requests)
             }
         })
 
     }
 
     public render() {
+        console.log(this.props.tickets)
         return (
             <div className={'login-page'}>
                 <Container fixed>
@@ -102,15 +104,17 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
 }
 
 
-function mapStateToProps({isUserValid}: ApplicationState){
+function mapStateToProps({isUserValid, tickets}: ApplicationState){
     return {
-      isUserValid
+      isUserValid,
+      tickets
     }
   }
 
 function mapDispatchToProps(dispatch:any){
     return {
-        enableErrorPage: () => dispatch(actions.enableErrorPage())
+        enableErrorPage: () => dispatch(actions.enableErrorPage()),
+        updateTicketTable: (content:any) => dispatch(actions.updateTicketTable(content))
     }
 }
   

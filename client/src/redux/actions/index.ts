@@ -5,3 +5,10 @@ export function enableErrorPage():any{
         status: false
     }
 }
+
+export function updateTicketTable(content:any):any{
+    return{
+        type: 'UPDATE_TICKETS',
+        content: content
+    }
+}

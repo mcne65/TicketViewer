@@ -1,3 +1,4 @@
 export interface ApplicationState {
-    isUserValid: boolean
+    isUserValid: boolean,
+    tickets?: any
 }
