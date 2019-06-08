@@ -3,15 +3,32 @@ import './App.css';
 import { LoginPage } from './components/LoginPage/LoginPage.ui'
 import { ErrorPage } from './components/ErrorPage/ErrorPage.ui'
 import { Header } from './components/Header/Header.ui'
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <Header />
-      <ErrorPage />
-      <LoginPage />
+import { connect } from 'react-redux'
+import { ApplicationState } from './redux/state/ApplicationState'
 
-    </div>
-  );
+interface IAppProps {
+  isUserValid: boolean
 }
 
-export default App;
+class App extends React.Component<IAppProps>{
+  public render (){
+    return (
+      <div className="App">
+        <Header />
+        {this.props.isUserValid ? null : <ErrorPage />}
+        <LoginPage />
+  
+      </div>
+    );
+  }
+
+}
+
+function mapStateToProps({isUserValid}: ApplicationState){
+  return {
+    isUserValid
+  }
+}
+
+
+export default connect(mapStateToProps)(App)
