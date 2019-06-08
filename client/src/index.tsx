@@ -7,10 +7,10 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux'
 import { InitialState } from './redux/state/InitialState'
 
-function testReducer(state = {isUserValid:false}, action:any){
+function testReducer(state = {isUserValid:true}, action:any){
     switch(action.type) {
-        case 'ADD':
-            return state
+        case 'ENABLE_ERROR_PAGE':
+            return {...state, isUserValid: false}
         default:
             return state
     }
@@ -18,7 +18,7 @@ function testReducer(state = {isUserValid:false}, action:any){
 
 
 ReactDOM.render(
-<Provider store={createStore(testReducer, InitialState)}>
+<Provider store={createStore(testReducer)}>
 <App />
 </Provider>
 , document.getElementById('root'));

@@ -1,13 +1,22 @@
 import * as React from 'react'
 import './styles.css'
 import { Container, Grid, TextField, Typography, Button } from '@material-ui/core'
+import { ApplicationState } from '../../redux/state/ApplicationState'
+import { connect } from 'react-redux'
+import * as actions from '../../redux/actions/index'
 
-interface LoginPageState {
+
+interface ILoginPageState {
     email: string,
     password: string,
 }
 
-export class LoginPage extends React.Component<any, LoginPageState> {
+
+interface ILoginPageProps {
+    enableErrorPage: () => void
+}
+
+class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
 
     constructor(props: any) {
         super(props)
@@ -36,6 +45,7 @@ export class LoginPage extends React.Component<any, LoginPageState> {
         fetch("http://localhost:5000/")
         .then(res => res.json())
         .then(res => console.log(res))
+        this.props.enableErrorPage()
     }
 
     public render() {
@@ -83,3 +93,19 @@ export class LoginPage extends React.Component<any, LoginPageState> {
     }
 
 }
+
+
+function mapStateToProps({isUserValid}: ApplicationState){
+    return {
+      isUserValid
+    }
+  }
+
+function mapDispatchToProps(dispatch:any){
+    return {
+        enableErrorPage: () => dispatch(actions.enableErrorPage())
+    }
+}
+  
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(LoginPage)

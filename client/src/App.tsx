@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { LoginPage } from './components/LoginPage/LoginPage.ui'
+import  LoginPage  from './components/LoginPage/LoginPage.ui'
 import { ErrorPage } from './components/ErrorPage/ErrorPage.ui'
 import { Header } from './components/Header/Header.ui'
 import { connect } from 'react-redux'
@@ -12,6 +12,7 @@ interface IAppProps {
 
 class App extends React.Component<IAppProps>{
   public render (){
+    console.log(this.props.isUserValid)
     return (
       <div className="App">
         <Header />
