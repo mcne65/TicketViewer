@@ -7,7 +7,8 @@ import { connect } from 'react-redux'
 import { ApplicationState } from './redux/state/ApplicationState'
 
 interface IAppProps {
-  isUserValid: boolean
+  isUserValid: boolean,
+  disableLoginPage: boolean
 }
 
 class App extends React.Component<IAppProps>{
@@ -17,7 +18,7 @@ class App extends React.Component<IAppProps>{
       <div className="App">
         <Header />
         {this.props.isUserValid ? null : <ErrorPage />}
-        <LoginPage />
+        {this.props.disableLoginPage? null:<LoginPage />}
   
       </div>
     );
@@ -25,9 +26,10 @@ class App extends React.Component<IAppProps>{
 
 }
 
-function mapStateToProps({isUserValid}: ApplicationState){
+function mapStateToProps({isUserValid, disableLoginPage}: ApplicationState){
   return {
-    isUserValid
+    isUserValid,
+    disableLoginPage
   }
 }
 

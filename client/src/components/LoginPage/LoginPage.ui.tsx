@@ -14,6 +14,7 @@ interface ILoginPageState {
 
 interface ILoginPageProps {
     enableErrorPage: () => void
+    disableLoginPage: () => void
     updateTicketTable: (content:any) => void
     tickets: any
 }
@@ -50,6 +51,7 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
             if (res.data.error === "Couldn't authenticate you"){
                 this.props.enableErrorPage()
             } else {
+                this.props.disableLoginPage()
                 this.props.updateTicketTable(res.data.requests)
             }
         })
@@ -114,7 +116,8 @@ function mapStateToProps({isUserValid, tickets}: ApplicationState){
 function mapDispatchToProps(dispatch:any){
     return {
         enableErrorPage: () => dispatch(actions.enableErrorPage()),
-        updateTicketTable: (content:any) => dispatch(actions.updateTicketTable(content))
+        updateTicketTable: (content:any) => dispatch(actions.updateTicketTable(content)),
+        disableLoginPage: () => dispatch(actions.disableLoginPage()),
     }
 }
   

@@ -1,4 +1,6 @@
 export interface ApplicationState {
     isUserValid: boolean,
-    tickets?: any
+    disableLoginPage: boolean,
+    tickets?: any,
+
 }
