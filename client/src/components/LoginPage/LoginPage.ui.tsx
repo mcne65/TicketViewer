@@ -33,6 +33,9 @@ export class LoginPage extends React.Component<any, LoginPageState> {
 
     handleOnSignin(event: React.SyntheticEvent){
         console.log(this.state)
+        fetch("http://localhost:5000/")
+        .then(res => res.json())
+        .then(res => console.log(res))
     }
 
     public render() {
