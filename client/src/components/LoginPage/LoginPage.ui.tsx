@@ -44,8 +44,15 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
         console.log(this.state)
         fetch("http://localhost:5000/")
         .then(res => res.json())
-        .then(res => console.log(res))
-        this.props.enableErrorPage()
+        .then(res => {
+            console.log(res)
+            if (res.data.error === "Couldn't authenticate you"){
+                this.props.enableErrorPage()
+            } else {
+                // this.props.enableErrorPage()
+            }
+        })
+
     }
 
     public render() {
