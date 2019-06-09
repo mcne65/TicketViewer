@@ -1,6 +1,6 @@
 import * as React from 'react'
 import './styles.css'
-import { Container, Grid, TextField, Typography, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core'
+import { Container, Grid, Table, TableHead, TableRow, TableCell, TableBody, TablePagination } from '@material-ui/core'
 import { ApplicationState } from '../../redux/state/ApplicationState'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions/index'
@@ -116,7 +116,7 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {(filteredTickets === undefined)?null:filteredTickets.map((ticket: any) => (
+                                    {(filteredTickets === undefined) ? null : filteredTickets.map((ticket: any) => (
                                         <TableRow key={ticket.id}>
                                             <TableCell component="th" scope="row">
                                                 {ticket.id}
@@ -129,6 +129,22 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
                                     ))}
                                 </TableBody>
                             </Table>
+                            <TablePagination
+                                component="div"
+                                rowsPerPageOptions={[5, 10, 25]}
+                                colSpan={3}
+                                count={100}
+                                rowsPerPage={25}
+                                page={2}
+                                SelectProps={{
+                                    inputProps: { 'aria-label': 'Rows per page' },
+                                    native: true,
+                                }}
+                                onChangePage={() => console.log('hies')}
+                            // onChangeRowsPerPage={handleChangeRowsPerPage}
+                            // ActionsComponent={TablePaginationActions}
+
+                            />
                         </Grid>
                     </Grid>
                 </Container>
