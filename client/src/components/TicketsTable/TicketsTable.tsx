@@ -195,14 +195,25 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
                             <Paper>
                                 <div >
                                     <Table>
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell> ID </TableCell>
+                                                <TableCell align="right"> Status </TableCell>
+                                                <TableCell> Subject </TableCell>
+                                                <TableCell> Created at </TableCell>
+                                                <TableCell> Updated at </TableCell>
+                                            </TableRow>
+                                        </TableHead>
                                         <TableBody>
-                                            {rows===undefined?null:rows.slice(this.state.page * 25, this.state.page * 25 + 25).map((row: any) => (
+                                            {rows === undefined ? null : rows.slice(this.state.page * 25, this.state.page * 25 + 25).map((row: any) => (
                                                 <TableRow key={row.id}>
                                                     <TableCell component="th" scope="row">
-                                                        {row.status}
+                                                        {row.id}
                                                     </TableCell>
-                                                    <TableCell align="right">{row.created_at}</TableCell>
-                                                    <TableCell align="right">{row.updated_at}</TableCell>
+                                                    <TableCell align="right">{row.status}</TableCell>
+                                                    <TableCell>{row.subject}</TableCell>
+                                                    <TableCell>{row.created_at}</TableCell>
+                                                    <TableCell>{row.updated_at}</TableCell>
                                                 </TableRow>
                                             ))}
                                             {emptyRows > 0 && (
@@ -216,7 +227,7 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
                                                 <TablePagination
                                                     rowsPerPageOptions={[5, 10, 25]}
                                                     colSpan={3}
-                                                    count={rows ===undefined?0:rows.length}
+                                                    count={rows === undefined ? 0 : rows.length}
                                                     rowsPerPage={25}
                                                     page={this.state.page}
                                                     SelectProps={{
@@ -232,50 +243,6 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
                                     </Table>
                                 </div>
                             </Paper>
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell> ID </TableCell>
-                                        <TableCell align="right"> Status </TableCell>
-                                        <TableCell> Subject </TableCell>
-                                        <TableCell align="right"> Created at </TableCell>
-                                        <TableCell align="right"> Updated at </TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {(filteredTickets === undefined) ? null : filteredTickets.map((ticket: any) => (
-                                        <TableRow
-                                            className={'table-row'}
-                                            key={ticket.id}
-                                            hover
-                                            onClick={() => console.log('display this row')}
-                                        >
-                                            <TableCell component="th" scope="row">
-                                                {ticket.id}
-                                            </TableCell>
-                                            <TableCell align="right">{ticket.status}</TableCell>
-                                            <TableCell>{ticket.subject}</TableCell>
-                                            <TableCell align="right">{ticket.created_at}</TableCell>
-                                            <TableCell align="right">{ticket.updated_at}</TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                            <TablePagination
-                                component="div"
-                                rowsPerPageOptions={[5, 10, 25]}
-                                colSpan={3}
-                                count={filteredTickets === undefined ? 0 : filteredTickets.length}
-                                rowsPerPage={25}
-                                page={2}
-                                SelectProps={{
-                                    inputProps: { 'aria-label': 'Rows per page' },
-                                    native: true,
-                                }}
-                                onChangePage={this.handleChangePage}
-                            // onChangeRowsPerPage={handleChangeRowsPerPage}
-                            // ActionsComponent={TablePaginationActions}
-                            />
                         </Grid>
                     </Grid>
                 </Container>
