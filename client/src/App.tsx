@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
-import  LoginPage  from './components/LoginPage/LoginPage.ui'
+import  LoginPage  from './components/LoginPage/LoginPage'
+import TicketsTable from './components/TicketsTable/TicketsTable'
 import { ErrorPage } from './components/ErrorPage/ErrorPage.ui'
 import { Header } from './components/Header/Header.ui'
 import { connect } from 'react-redux'
@@ -19,6 +20,7 @@ class App extends React.Component<IAppProps>{
         <Header />
         {this.props.isUserValid ? null : <ErrorPage />}
         {this.props.disableLoginPage? null:<LoginPage />}
+        {this.props.isUserValid && this.props.disableLoginPage ? <TicketsTable /> : null}
   
       </div>
     );

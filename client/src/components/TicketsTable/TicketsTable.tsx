@@ -1,6 +1,6 @@
 import * as React from 'react'
 import './styles.css'
-import { Container, Grid, TextField, Typography, Button } from '@material-ui/core'
+import { Container, Grid, TextField, Typography, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core'
 import { ApplicationState } from '../../redux/state/ApplicationState'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions/index'
@@ -19,7 +19,7 @@ interface ILoginPageProps {
     tickets: any
 }
 
-class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
+class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
 
     constructor(props: any) {
         super(props)
@@ -63,39 +63,30 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
         return (
             <div className={'login-page'}>
                 <Container fixed>
-                    <Typography variant="h6" gutterBottom>
-                        Sign into Ticket Viewer
-                    </Typography>
                     <Grid container spacing={1}>
                         <Grid item xs={12}>
-                            <TextField
-                                id="outlined-email"
-                                label="Email"
-                                margin="normal"
-                                variant="outlined"
-                                onChange={(e) => this.handleOnEmailChange(e)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                id="outlined-password"
-                                label="Password"
-                                margin="normal"
-                                variant="outlined"
-                                type="password"
-                                onChange={(e) => this.handleOnPasswordChange(e)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Button
-                                style={{ margin: '15px', width: '223px' }}
-                                variant="contained"
-                                color="primary"
-                                disableRipple
-                                onClick={(e) => this.handleOnSignin(e)}
-                            >
-                                Sign in
-                            </Button>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell> Hello </TableCell>
+                                        <TableCell align="right"> What </TableCell>
+                                        <TableCell align="right"> What </TableCell>
+                                        <TableCell align="right"> What </TableCell>
+                                        <TableCell align="right"> What </TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    <TableRow key={'hello'}>
+                                        <TableCell component = "th" scope="row">
+                                            name
+                                        </TableCell>
+                                        <TableCell align="right">hie</TableCell>
+                                        <TableCell align="right">hie</TableCell>
+                                        <TableCell align="right">hie</TableCell>
+                                        <TableCell align="right">hie</TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
                         </Grid>
                     </Grid>
                 </Container>
@@ -122,4 +113,4 @@ function mapDispatchToProps(dispatch:any){
 }
   
   
-  export default connect(mapStateToProps, mapDispatchToProps)(LoginPage)
+  export default connect(mapStateToProps, mapDispatchToProps)(TicketsTable)
