@@ -10,6 +10,7 @@ interface ILoginPageState {
     password: string,
     simplifiedTickets: any,
     page: number,
+    rowsPerPage: number
 }
 
 
@@ -29,8 +30,10 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
             password: '',
             simplifiedTickets: {},
             page: 0,
+            rowsPerPage: 25
         }
         this.handleChangePage = this.handleChangePage.bind(this);
+        this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
     }
 
     componentDidMount() {
@@ -67,8 +70,9 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
     handleChangeRowsPerPage(
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) {
+        console.log(event.target.value)
         this.setState({
-            // setRowsPerPage: parseInt(event.target.value, 10)
+            rowsPerPage: parseInt(event.target.value, 10)
         })
     }
 
@@ -109,7 +113,7 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {rows === undefined ? null : rows.slice(this.state.page * 25, this.state.page * 25 + 25).map((row: any) => (
+                                            {rows === undefined ? null : rows.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((row: any) => (
                                                 <TableRow 
                                                 key={row.id}
                                                 hover
@@ -133,10 +137,10 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
                                         <TableFooter>
                                             <TableRow>
                                                 <TablePagination
-                                                    rowsPerPageOptions={[5, 10, 25]}
+                                                    rowsPerPageOptions={[25]}
                                                     colSpan={3}
                                                     count={rows === undefined ? 0 : rows.length}
-                                                    rowsPerPage={25}
+                                                    rowsPerPage={this.state.rowsPerPage}
                                                     page={this.state.page}
                                                     SelectProps={{
                                                         inputProps: { 'aria-label': 'Rows per page' },
