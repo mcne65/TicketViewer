@@ -5,55 +5,29 @@ import { ApplicationState } from '../../redux/state/ApplicationState'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions/index'
 
-interface ILoginPageState {
-    email: string,
-    password: string,
-    simplifiedTickets: any,
+interface ITicketsTableState {
     page: number,
     rowsPerPage: number
 }
 
 
-interface ILoginPageProps {
+interface ITicketsTableProps {
     enableErrorPage: () => void
     disableLoginPage: () => void
     updateTicketTable: (content: any) => void
     tickets: any
 }
 
-class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
+class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableState> {
 
     constructor(props: any) {
         super(props)
         this.state = {
-            email: '',
-            password: '',
-            simplifiedTickets: {},
             page: 0,
             rowsPerPage: 25
         }
         this.handleChangePage = this.handleChangePage.bind(this);
         this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
-    }
-
-    componentDidMount() {
-        console.log(this.props.tickets)
-        if (this.props.tickets !== undefined) {
-            const filteredTickets = this.props.tickets.map((ticket: any) => {
-                return {
-                    id: ticket.id,
-                    status: ticket.status,
-                    subject: ticket.subject,
-                    is_public: ticket.is_public,
-                    created_at: ticket.created_at,
-                    updated_at: ticket.updated_at
-                }
-
-            })
-            this.setState({
-                simplifiedTickets: filteredTickets
-            })
-        }
     }
 
     handleChangePage(
@@ -77,9 +51,12 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
     }
 
     public render() {
-        let filteredTickets: any
+
+        let rows: any
+        let emptyRows = 0
+        
         if (this.props.tickets !== undefined) {
-            filteredTickets = this.props.tickets.map((ticket: any) => {
+            rows = this.props.tickets.map((ticket: any) => {
                 return {
                     id: ticket.id,
                     status: ticket.status,
@@ -89,11 +66,11 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
                     updated_at: ticket.updated_at
                 }
             })
+            emptyRows = this.state.rowsPerPage - Math.min(this.state.rowsPerPage, rows.length - this.state.page * this.state.rowsPerPage);
         } else {
-            filteredTickets = undefined
+            rows = undefined
         }
-        let rows = filteredTickets
-        const emptyRows = 25 - Math.min(25, 101 - this.state.page * 25);
+
 
         return (
             <div className={'login-page'}>
@@ -137,7 +114,7 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
                                         <TableFooter>
                                             <TableRow>
                                                 <TablePagination
-                                                    rowsPerPageOptions={[25]}
+                                                    rowsPerPageOptions={[5,10,25,30]}
                                                     colSpan={3}
                                                     count={rows === undefined ? 0 : rows.length}
                                                     rowsPerPage={this.state.rowsPerPage}
@@ -164,9 +141,8 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
 }
 
 
-function mapStateToProps({ isUserValid, tickets }: ApplicationState) {
+function mapStateToProps({ tickets }: ApplicationState) {
     return {
-        isUserValid,
         tickets
     }
 }
