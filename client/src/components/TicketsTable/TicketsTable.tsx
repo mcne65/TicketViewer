@@ -1,15 +1,93 @@
 import * as React from 'react'
 import './styles.css'
-import { Container, Grid, Table, TableHead, TableRow, TableCell, TableBody, TablePagination } from '@material-ui/core'
+import { Container, Grid, Table, TableHead, TableRow, TableCell, TableBody, TablePagination, Paper, TableFooter } from '@material-ui/core'
 import { ApplicationState } from '../../redux/state/ApplicationState'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions/index'
+import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import FirstPageIcon from '@material-ui/icons/FirstPage';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import LastPageIcon from '@material-ui/icons/LastPage';
+
+const useStyles1 = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            flexShrink: 0,
+            color: theme.palette.text.secondary,
+            marginLeft: theme.spacing(2.5),
+        },
+    }),
+);
+
+
+interface TablePaginationActionsProps {
+    count: number;
+    page: number;
+    rowsPerPage: number;
+    onChangePage: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, newPage: number) => void;
+}
+
+function TablePaginationActions(props: TablePaginationActionsProps) {
+    const classes = useStyles1();
+    const theme = useTheme();
+    const { count, page, rowsPerPage, onChangePage } = props;
+
+    function handleFirstPageButtonClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+        onChangePage(event, 0);
+    }
+
+    function handleBackButtonClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+        onChangePage(event, page - 1);
+    }
+
+    function handleNextButtonClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+        onChangePage(event, page + 1);
+    }
+
+    function handleLastPageButtonClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+        onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
+    }
+
+    return (
+        <div className={classes.root}>
+            <IconButton
+                onClick={handleFirstPageButtonClick}
+                disabled={page === 0}
+                aria-label="First Page"
+            >
+                {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+            </IconButton>
+            <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="Previous Page">
+                {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+            </IconButton>
+            <IconButton
+                onClick={handleNextButtonClick}
+                disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+                aria-label="Next Page"
+            >
+                {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+            </IconButton>
+            <IconButton
+                onClick={handleLastPageButtonClick}
+                disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+                aria-label="Last Page"
+            >
+                {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+            </IconButton>
+        </div>
+    );
+}
 
 
 interface ILoginPageState {
     email: string,
     password: string,
-    simplifiedTickets: any
+    simplifiedTickets: any,
+    page: number,
+    setPage: number,
+    setRowsPerPage: number
 }
 
 
@@ -27,7 +105,10 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
         this.state = {
             email: '',
             password: '',
-            simplifiedTickets: {}
+            simplifiedTickets: {},
+            page: 0,
+            setPage: 0,
+            setRowsPerPage: 5
         }
     }
 
@@ -51,33 +132,22 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
         }
     }
 
-    handleOnEmailChange(event: React.SyntheticEvent) {
-        let currentTarget = event.currentTarget as HTMLInputElement
+    handleChangePage(
+        event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
+        newPage: number,
+    ) {
         this.setState({
-            email: currentTarget.value
+            setPage: newPage
         })
     }
 
-    handleOnPasswordChange(event: React.SyntheticEvent) {
-        let currentTarget = event.currentTarget as HTMLInputElement
+
+    handleChangeRowsPerPage(
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) {
         this.setState({
-            password: currentTarget.value
+            setRowsPerPage: parseInt(event.target.value, 10)
         })
-    }
-
-    handleOnSignin(event: React.SyntheticEvent) {
-        fetch("http://localhost:5000/")
-            .then(res => res.json())
-            .then(res => {
-                console.log(res)
-                if (res.data.error === "Couldn't authenticate you") {
-                    this.props.enableErrorPage()
-                } else {
-                    this.props.disableLoginPage()
-                    this.props.updateTicketTable(res.data.requests)
-                }
-            })
-
     }
 
     public render() {
@@ -99,12 +169,69 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
         } else {
             filteredTickets = undefined
         }
+        const useStyles2 = makeStyles((theme: Theme) =>
+            createStyles({
+                root: {
+                    width: '100%',
+                    marginTop: theme.spacing(3),
+                },
+                table: {
+                    minWidth: 500,
+                },
+                tableWrapper: {
+                    overflowX: 'auto',
+                },
+            }),
+        );
+        // const classes = useStyles2();
+        let rows = filteredTickets
+        const emptyRows = 25 - Math.min(25, 101 - this.state.page * 25);
 
         return (
             <div className={'login-page'}>
                 <Container fixed>
                     <Grid container spacing={1}>
                         <Grid item xs={12}>
+                            <Paper>
+                                <div >
+                                    <Table>
+                                        <TableBody>
+                                            {rows===undefined?null:rows.slice(this.state.page * 25, this.state.page * 25 + 25).map((row: any) => (
+                                                <TableRow key={row.id}>
+                                                    <TableCell component="th" scope="row">
+                                                        {row.status}
+                                                    </TableCell>
+                                                    <TableCell align="right">{row.created_at}</TableCell>
+                                                    <TableCell align="right">{row.updated_at}</TableCell>
+                                                </TableRow>
+                                            ))}
+                                            {emptyRows > 0 && (
+                                                <TableRow style={{ height: 48 * emptyRows }}>
+                                                    <TableCell colSpan={6} />
+                                                </TableRow>
+                                            )}
+                                        </TableBody>
+                                        <TableFooter>
+                                            <TableRow>
+                                                <TablePagination
+                                                    rowsPerPageOptions={[5, 10, 25]}
+                                                    colSpan={3}
+                                                    count={rows ===undefined?0:rows.length}
+                                                    rowsPerPage={25}
+                                                    page={this.state.page}
+                                                    SelectProps={{
+                                                        inputProps: { 'aria-label': 'Rows per page' },
+                                                        native: true,
+                                                    }}
+                                                    onChangePage={this.handleChangePage}
+                                                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                                                    ActionsComponent={TablePaginationActions}
+                                                />
+                                            </TableRow>
+                                        </TableFooter>
+                                    </Table>
+                                </div>
+                            </Paper>
                             <Table>
                                 <TableHead>
                                     <TableRow>
@@ -117,11 +244,11 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
                                 </TableHead>
                                 <TableBody>
                                     {(filteredTickets === undefined) ? null : filteredTickets.map((ticket: any) => (
-                                        <TableRow 
-                                        className={'table-row'}
-                                        key={ticket.id}
-                                        hover
-                                        onClick={() => console.log('display this row')}
+                                        <TableRow
+                                            className={'table-row'}
+                                            key={ticket.id}
+                                            hover
+                                            onClick={() => console.log('display this row')}
                                         >
                                             <TableCell component="th" scope="row">
                                                 {ticket.id}
@@ -145,7 +272,7 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
                                     inputProps: { 'aria-label': 'Rows per page' },
                                     native: true,
                                 }}
-                                onChangePage={() => console.log('hies')}
+                                onChangePage={this.handleChangePage}
                             // onChangeRowsPerPage={handleChangeRowsPerPage}
                             // ActionsComponent={TablePaginationActions}
                             />
