@@ -4,6 +4,7 @@ import { Container, Grid, Table, TableHead, TableRow, TableCell, TableBody, Tabl
 import { ApplicationState } from '../../redux/state/ApplicationState'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions/index'
+import SingleTicket from '../SingleTicket/SingleTicket'
 
 interface ITicketsTableState {
     page: number,
@@ -54,7 +55,7 @@ class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableStat
 
         let rows: any
         let emptyRows = 0
-        
+
         if (this.props.tickets !== undefined) {
             rows = this.props.tickets.map((ticket: any) => {
                 return {
@@ -73,68 +74,67 @@ class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableStat
 
 
         return (
-            <div className={'login-page'}>
-                <Container fixed>
-                    <Grid container spacing={1}>
-                        <Grid item xs={12}>
-                            <Paper>
-                                <div >
-                                    <Table>
-                                        <TableHead>
-                                            <TableRow>
-                                                <TableCell> ID </TableCell>
-                                                <TableCell> Status </TableCell>
-                                                <TableCell> Subject </TableCell>
-                                                <TableCell> Created at </TableCell>
-                                                <TableCell> Updated at </TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {rows === undefined ? null : rows.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((row: any) => (
-                                                <TableRow 
+            <Container fixed>
+                <SingleTicket />
+                {true?null:<Grid container spacing={1}>
+                    <Grid item xs={12}>
+                        <Paper>
+                            <div >
+                                <Table>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell> ID </TableCell>
+                                            <TableCell> Status </TableCell>
+                                            <TableCell> Subject </TableCell>
+                                            <TableCell> Created at </TableCell>
+                                            <TableCell> Updated at </TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {rows === undefined ? null : rows.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((row: any) => (
+                                            <TableRow
                                                 key={row.id}
                                                 hover
                                                 className={'table-row'}
-                                                >
-                                                    <TableCell>
-                                                        {row.id}
-                                                    </TableCell>
-                                                    <TableCell >{row.status}</TableCell>
-                                                    <TableCell>{row.subject}</TableCell>
-                                                    <TableCell>{row.created_at}</TableCell>
-                                                    <TableCell>{row.updated_at}</TableCell>
-                                                </TableRow>
-                                            ))}
-                                            {emptyRows > 0 && (
-                                                <TableRow style={{ height: 48 * emptyRows }}>
-                                                    <TableCell colSpan={6} />
-                                                </TableRow>
-                                            )}
-                                        </TableBody>
-                                        <TableFooter>
-                                            <TableRow>
-                                                <TablePagination
-                                                    rowsPerPageOptions={[5,10,25,30]}
-                                                    colSpan={3}
-                                                    count={rows === undefined ? 0 : rows.length}
-                                                    rowsPerPage={this.state.rowsPerPage}
-                                                    page={this.state.page}
-                                                    SelectProps={{
-                                                        inputProps: { 'aria-label': 'Rows per page' },
-                                                        native: true,
-                                                    }}
-                                                    onChangePage={this.handleChangePage}
-                                                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                                                />
+                                            >
+                                                <TableCell>
+                                                    {row.id}
+                                                </TableCell>
+                                                <TableCell >{row.status}</TableCell>
+                                                <TableCell>{row.subject}</TableCell>
+                                                <TableCell>{row.created_at}</TableCell>
+                                                <TableCell>{row.updated_at}</TableCell>
                                             </TableRow>
-                                        </TableFooter>
-                                    </Table>
-                                </div>
-                            </Paper>
-                        </Grid>
+                                        ))}
+                                        {emptyRows > 0 && (
+                                            <TableRow style={{ height: 48 * emptyRows }}>
+                                                <TableCell colSpan={6} />
+                                            </TableRow>
+                                        )}
+                                    </TableBody>
+                                    <TableFooter>
+                                        <TableRow>
+                                            <TablePagination
+                                                rowsPerPageOptions={[5, 10, 25, 30]}
+                                                colSpan={3}
+                                                count={rows === undefined ? 0 : rows.length}
+                                                rowsPerPage={this.state.rowsPerPage}
+                                                page={this.state.page}
+                                                SelectProps={{
+                                                    inputProps: { 'aria-label': 'Rows per page' },
+                                                    native: true,
+                                                }}
+                                                onChangePage={this.handleChangePage}
+                                                onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                                            />
+                                        </TableRow>
+                                    </TableFooter>
+                                </Table>
+                            </div>
+                        </Paper>
                     </Grid>
-                </Container>
-            </div>
+                </Grid>}
+            </Container>
         )
     }
 

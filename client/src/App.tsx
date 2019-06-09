@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import  LoginPage  from './components/LoginPage/LoginPage'
 import TicketsTable from './components/TicketsTable/TicketsTable'
+import SingleTickek from './components/SingleTicket/SingleTicket'
 import { ErrorPage } from './components/ErrorPage/ErrorPage.ui'
 import { Header } from './components/Header/Header.ui'
 import { connect } from 'react-redux'
