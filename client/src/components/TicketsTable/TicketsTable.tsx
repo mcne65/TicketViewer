@@ -117,7 +117,12 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
                                 </TableHead>
                                 <TableBody>
                                     {(filteredTickets === undefined) ? null : filteredTickets.map((ticket: any) => (
-                                        <TableRow key={ticket.id}>
+                                        <TableRow 
+                                        className={'table-row'}
+                                        key={ticket.id}
+                                        hover
+                                        onClick={() => console.log('display this row')}
+                                        >
                                             <TableCell component="th" scope="row">
                                                 {ticket.id}
                                             </TableCell>
@@ -133,7 +138,7 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
                                 component="div"
                                 rowsPerPageOptions={[5, 10, 25]}
                                 colSpan={3}
-                                count={100}
+                                count={filteredTickets === undefined ? 0 : filteredTickets.length}
                                 rowsPerPage={25}
                                 page={2}
                                 SelectProps={{
@@ -143,7 +148,6 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
                                 onChangePage={() => console.log('hies')}
                             // onChangeRowsPerPage={handleChangeRowsPerPage}
                             // ActionsComponent={TablePaginationActions}
-
                             />
                         </Grid>
                     </Grid>
