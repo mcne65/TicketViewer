@@ -151,9 +151,7 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
     }
 
     public render() {
-        console.log(this.props.tickets)
         let filteredTickets: any
-
         if (this.props.tickets !== undefined) {
             filteredTickets = this.props.tickets.map((ticket: any) => {
                 return {
@@ -165,25 +163,9 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
                     updated_at: ticket.updated_at
                 }
             })
-            console.log(filteredTickets)
         } else {
             filteredTickets = undefined
         }
-        const useStyles2 = makeStyles((theme: Theme) =>
-            createStyles({
-                root: {
-                    width: '100%',
-                    marginTop: theme.spacing(3),
-                },
-                table: {
-                    minWidth: 500,
-                },
-                tableWrapper: {
-                    overflowX: 'auto',
-                },
-            }),
-        );
-        // const classes = useStyles2();
         let rows = filteredTickets
         const emptyRows = 25 - Math.min(25, 101 - this.state.page * 25);
 
@@ -198,7 +180,7 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
                                         <TableHead>
                                             <TableRow>
                                                 <TableCell> ID </TableCell>
-                                                <TableCell align="right"> Status </TableCell>
+                                                <TableCell> Status </TableCell>
                                                 <TableCell> Subject </TableCell>
                                                 <TableCell> Created at </TableCell>
                                                 <TableCell> Updated at </TableCell>
@@ -206,11 +188,15 @@ class TicketsTable extends React.Component<ILoginPageProps, ILoginPageState> {
                                         </TableHead>
                                         <TableBody>
                                             {rows === undefined ? null : rows.slice(this.state.page * 25, this.state.page * 25 + 25).map((row: any) => (
-                                                <TableRow key={row.id}>
-                                                    <TableCell component="th" scope="row">
+                                                <TableRow 
+                                                key={row.id}
+                                                hover
+                                                className={'table-row'}
+                                                >
+                                                    <TableCell>
                                                         {row.id}
                                                     </TableCell>
-                                                    <TableCell align="right">{row.status}</TableCell>
+                                                    <TableCell >{row.status}</TableCell>
                                                     <TableCell>{row.subject}</TableCell>
                                                     <TableCell>{row.created_at}</TableCell>
                                                     <TableCell>{row.updated_at}</TableCell>
