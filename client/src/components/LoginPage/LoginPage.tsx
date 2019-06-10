@@ -45,7 +45,7 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
 
     handleOnSignin(event: React.SyntheticEvent) {
         const { email, password } = this.state
-        fetch(`http://localhost:5000/api/${email}/${password}`)
+        fetch(`http://localhost:5000/api/tickets/${email}/${password}`)
             .then(res => res.json())
             .then(res => {
                 if (res.data.error === "Couldn't authenticate you") {

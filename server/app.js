@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
     })
 })
 
-app.get('/api/:email/:password', (req, res) => {
+app.get('/api/tickets/:email/:password', (req, res) => {
     const apiUrl = 'https://rozajaybird.zendesk.com/api/v2/requests.json'
     const email = req.params.email
     const password = req.params.password
@@ -50,6 +50,7 @@ app.get('/api/organisationId/:organisationId', (req, res) => {
     const organisationId = req.params.organisationId
     const apiUrl = `https://rozajaybird.zendesk.com/api/v2/organizations/${organisationId}.json` //Organisation id retrieval
     console.log(variables.email)
+    console.log('hie')
     fetch(apiUrl, {
         method:'GET',
         headers: {
