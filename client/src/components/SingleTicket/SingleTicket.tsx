@@ -36,55 +36,89 @@ class SingleTicket extends React.Component<ISingleTicketProps> {
                                 <Tooltip title="Not solvable by me" placement="top">
                                     <Icon style={{ color: 'red', marginLeft: '2px' }}>
                                         cancel
-                        </Icon>
+                                    </Icon>
                                 </Tooltip> :
                                 <Tooltip title="Solvable by me" placement="top">
                                     <Icon style={{ color: 'green', marginLeft: '2px' }}>
                                         check_circle
-                        </Icon>
+                                    </Icon>
                                 </Tooltip>}
                         </Typography>
 
                     </CardContent>
                     <Grid container spacing={1}>
-                        <Grid item xs={6}>
-                            Status
-                            </Grid>
+                        <Grid item xs={1}>
+                        </Grid>
+                        <Grid item xs={5}>
+                            Status: {currentTicket.status}
+                        </Grid>
                         <Grid item xs={6}>
                             Requester
                             </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={1}>
+                        </Grid>
+                        <Grid item xs={5}>
                             Organisation
                         </Grid>
                         <Grid item xs={6}>
                             Assignee
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={1}>
+
+                        </Grid>
+                        <Grid item xs={11}>
                             Labels
                         </Grid>
-                        <Grid item xs={12}>
-                            Subject
+                        <Grid item xs={1}>
                         </Grid>
-                        <Grid item xs={12}>
-                            Description
+                        <Grid item xs={10}>
+                            Subject: {currentTicket.subject}
+                        </Grid>
+                        <Grid item xs={1}>
+
+                        </Grid>
+                        <Grid item xs={1}>
+
+                        </Grid>
+                        <Grid item xs={10}>
+                            <Typography variant="h5" component="h2">
+                                Description:
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={1}>
+                        </Grid>
+                        <Grid item xs={1}>
+                        </Grid>
+                        <Grid item xs={10}>
+                            <Typography variant="body2" component="p">
+                                {currentTicket.description}
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={1}>
                         </Grid>
                     </Grid>
-                    <CardActions>
-                        <Button
-                            style={{
-                                backgroundColor: '#0E373D',
-                                color: 'white'
-                            }}
-                            variant="outlined"
-                            size="medium"
-                            onClick={this.props.enableTicketsTablePage}
-                        > Back to all tickets </Button>
-                    </CardActions>
+                    <CardContent>
+                        <Grid container spacing={1}>
+                            <Grid item xs={10}>
+                            </Grid>
+                            <Grid item xs={2}>
+                                <Button
+                                    style={{
+                                        backgroundColor: '#0E373D',
+                                        color: 'white'
+                                    }}
+                                    variant="outlined"
+                                    size="medium"
+                                    onClick={this.props.enableTicketsTablePage}
+                                > Back to all tickets </Button>
+                            </Grid>
+                        </Grid>
+
+                    </CardContent>
                 </Card>
             </div>
         )
     }
-
 }
 
 
