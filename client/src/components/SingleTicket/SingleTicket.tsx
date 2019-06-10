@@ -8,15 +8,60 @@ import * as actions from '../../redux/actions/index'
 interface ISingleTicketProps {
     enableTicketsTablePage: () => void
     currentTicket: any
+
 }
 
-class SingleTicket extends React.Component<ISingleTicketProps> {
 
-    handleOnClick(event: React.SyntheticEvent) {
-        let currentTarget = event.currentTarget as HTMLInputElement
-        this.setState({
-            email: currentTarget.value
-        })
+interface ISingleTicketState {
+    organisationName: string,
+    assigneeName: string,
+    requesterName: string
+}
+
+class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketState> {
+
+    constructor(props: any) {
+        super(props)
+        this.state = {
+            organisationName: '',
+            assigneeName: '',
+            requesterName: ''
+        }
+    }
+
+    componentDidMount(){
+            const organisationName = fetch("http://localhost:5000/organisationID")
+            .then(res => res.json())
+            .then(res => {
+                if (res.data.error === "Couldn't authenticate you"){
+                    // this.props.enableErrorPage()
+                } else {
+                    // this.props.disableLoginPage()
+                    // this.props.updateTicketTable(res.data.requests)
+                    console.log(res.data)
+                    this.setState({
+                        organisationName: res.data.organization.name
+                    })
+                }
+            })
+
+            const userName = fetch("http://localhost:5000/userID")
+            .then(res => res.json())
+            .then(res => {
+                if (res.data.error === "Couldn't authenticate you"){
+                    // this.props.enableErrorPage()
+                } else {
+                    // this.props.disableLoginPage()
+                    // this.props.updateTicketTable(res.data.requests)
+                    console.log(res.data)
+                    this.setState({
+                        requesterName: res.data.user.name,
+                        assigneeName: res.data.user.name
+                    })
+                }
+            })
+
+            Promise.all([organisationName, userName])
     }
 
     public render() {
@@ -55,19 +100,19 @@ class SingleTicket extends React.Component<ISingleTicketProps> {
                         </Grid>
                         <Grid item xs={6}>
                             <Typography variant="h5" component="h4">
-                                <b>Requester:</b>
+                                <b>Requester:</b> {this.state.requesterName}
                             </Typography>
                         </Grid>
                         <Grid item xs={1}>
                         </Grid>
                         <Grid item xs={5}>
                             <Typography variant="h5" component="h4">
-                                <b>Organisation:</b>
+                                <b>Organisation:</b> {this.state.organisationName}
                             </Typography>
                         </Grid>
                         <Grid item xs={6}>
                             <Typography variant="h5" component="h4">
-                                <b>Assignee:</b>
+                                <b>Assignee:</b> {this.state.assigneeName}
                             </Typography>
                         </Grid>
                         <Grid item xs={1}>
