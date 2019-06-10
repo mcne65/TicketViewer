@@ -12,11 +12,10 @@ interface ITicketsTableState {
 }
 
 interface ITicketsTableProps {
-    enableErrorPage: () => void
-    disableLoginPage: () => void
-    updateTicketTable: (content: any) => void
+    enableSingleTicketPage: () => void
     tickets: any,
     viewWholeTable: boolean,
+    viewSingleTicketPage: boolean,
 }
 
 class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableState> {
@@ -71,12 +70,11 @@ class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableStat
         } else {
             rows = undefined
         }
-        console.log(this.props.viewWholeTable)
 
 
         return (
             <Container fixed>
-                <SingleTicket />
+                {this.props.viewSingleTicketPage ? <SingleTicket /> : null}
                 {this.props.viewWholeTable ? <Grid container spacing={1}>
                     <Grid item xs={12}>
                         <Paper>
@@ -91,7 +89,10 @@ class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableStat
                                             <TableCell> Updated at </TableCell>
                                         </TableRow>
                                     </TableHead>
-                                    <TableBody>
+                                    <TableBody
+                                        onClick={this.props.enableSingleTicketPage}
+
+                                    >
                                         {rows === undefined ? null : rows.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((row: any) => (
                                             <TableRow
                                                 key={row.id}
@@ -134,7 +135,7 @@ class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableStat
                             </div>
                         </Paper>
                     </Grid>
-                </Grid>: null}
+                </Grid> : null}
             </Container>
         )
     }
@@ -142,16 +143,17 @@ class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableStat
 }
 
 
-function mapStateToProps({ tickets, viewWholeTable }: ApplicationState) {
+function mapStateToProps({ tickets, viewWholeTable, viewSingleTicketPage }: ApplicationState) {
     return {
         tickets,
-        viewWholeTable
+        viewWholeTable,
+        viewSingleTicketPage
     }
 }
 
 function mapDispatchToProps(dispatch: any) {
     return {
-        enableErrorPage: () => dispatch(actions.enableErrorPage()),
+        enableSingleTicketPage: () => dispatch(actions.enableSingleTicketPage()),
         updateTicketTable: (content: any) => dispatch(actions.updateTicketTable(content)),
         disableLoginPage: () => dispatch(actions.disableLoginPage()),
     }

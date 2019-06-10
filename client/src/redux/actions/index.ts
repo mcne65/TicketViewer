@@ -23,3 +23,9 @@ export function enableTicketsTablePage():any{
         type: 'ENABLE_TICKETSTABLE_PAGE',
     }
 }
+
+export function enableSingleTicketPage():any{
+    return{
+        type: 'ENABLE_SINGLE_TICKET_PAGE',
+    }
+}
