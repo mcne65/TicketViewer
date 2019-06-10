@@ -1,6 +1,6 @@
 import * as React from 'react'
 import './styles.css'
-import { CardActions, Typography, Button, Card, CardContent, Icon, Tooltip, Grid } from '@material-ui/core'
+import { Typography, Button, Card, CardContent, Icon, Tooltip, Grid } from '@material-ui/core'
 import { ApplicationState } from '../../redux/state/ApplicationState'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions/index'
@@ -44,45 +44,62 @@ class SingleTicket extends React.Component<ISingleTicketProps> {
                                     </Icon>
                                 </Tooltip>}
                         </Typography>
-
                     </CardContent>
                     <Grid container spacing={1}>
                         <Grid item xs={1}>
                         </Grid>
                         <Grid item xs={5}>
-                            Status: {currentTicket.status}
+                            <Typography variant="h5" component="h4">
+                                <b>Status:</b> {currentTicket.status}
+                            </Typography>
                         </Grid>
                         <Grid item xs={6}>
-                            Requester
-                            </Grid>
+                            <Typography variant="h5" component="h4">
+                                <b>Requester:</b>
+                            </Typography>
+                        </Grid>
                         <Grid item xs={1}>
                         </Grid>
                         <Grid item xs={5}>
-                            Organisation
+                            <Typography variant="h5" component="h4">
+                                <b>Organisation:</b>
+                            </Typography>
                         </Grid>
                         <Grid item xs={6}>
-                            Assignee
+                            <Typography variant="h5" component="h4">
+                                <b>Assignee:</b>
+                            </Typography>
                         </Grid>
                         <Grid item xs={1}>
-
                         </Grid>
                         <Grid item xs={11}>
-                            Labels
+                            <Typography variant="h5" component="h4">
+                                <b>Labels:</b>
+                            </Typography>
                         </Grid>
                         <Grid item xs={1}>
                         </Grid>
                         <Grid item xs={10}>
-                            Subject: {currentTicket.subject}
+                            <Typography variant="h5" component="h3">
+                                <b>Subject:</b>
+                            </Typography>
                         </Grid>
                         <Grid item xs={1}>
-
                         </Grid>
                         <Grid item xs={1}>
-
                         </Grid>
                         <Grid item xs={10}>
-                            <Typography variant="h5" component="h2">
-                                Description:
+                            <Typography variant="body2" component="p">
+                                {currentTicket.subject}
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={1}>
+                        </Grid>
+                        <Grid item xs={1}>
+                        </Grid>
+                        <Grid item xs={10}>
+                            <Typography variant="h5" component="h3">
+                                <b>Description:</b>
                             </Typography>
                         </Grid>
                         <Grid item xs={1}>
@@ -113,7 +130,6 @@ class SingleTicket extends React.Component<ISingleTicketProps> {
                                 > Back to all tickets </Button>
                             </Grid>
                         </Grid>
-
                     </CardContent>
                 </Card>
             </div>
