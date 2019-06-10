@@ -1,4 +1,12 @@
-export function rootReducer(state = { isUserValid: true, viewWholeTable: true, viewSingleTicketPage: false }, action: any) {
+const InitialState = {
+    isUserValid: true, 
+    viewWholeTable: true, 
+    viewSingleTicketPage: false,
+    disableLoginPage: false
+}
+
+
+export function rootReducer(state = InitialState, action: any) {
     switch (action.type) {
         case 'ENABLE_ERROR_PAGE':
             return { ...state, isUserValid: false }
@@ -11,7 +19,7 @@ export function rootReducer(state = { isUserValid: true, viewWholeTable: true, v
         case 'ENABLE_SINGLE_TICKET_PAGE':
             return { ...state, viewSingleTicketPage: true, viewWholeTable:false }
         case 'RESET_APPLICATION':
-            return { disableLoginPage: false, viewWholeTable: true, viewSingleTicketPage: false, isUserValid: true}
+            return { ...InitialState}
         default:
             return state
     }
