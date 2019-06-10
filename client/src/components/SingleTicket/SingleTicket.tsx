@@ -36,10 +36,7 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
             .then(res => res.json())
             .then(res => {
                 if (res.data.error === "Couldn't authenticate you") {
-                    // this.props.enableErrorPage()
                 } else {
-                    // this.props.disableLoginPage()
-                    // this.props.updateTicketTable(res.data.requests)
                     console.log(res.data)
                     this.setState({
                         organisationName: res.data.organization.name
@@ -47,31 +44,38 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
                 }
             })
 
-        const userName = fetch("http://localhost:5000/userID")
+        const requesterId = this.props.currentTicket.requester_id
+        const requesterName = fetch(`http://localhost:5000/api/userId/${requesterId}`)
             .then(res => res.json())
             .then(res => {
                 if (res.data.error === "Couldn't authenticate you") {
-                    // this.props.enableErrorPage()
                 } else {
-                    // this.props.disableLoginPage()
-                    // this.props.updateTicketTable(res.data.requests)
                     console.log(res.data)
                     this.setState({
                         requesterName: res.data.user.name,
-                        assigneeName: res.data.user.name
                     })
                 }
             })
+
+            const assigneeId = this.props.currentTicket.assignee_id
+            const assigneeName = fetch(`http://localhost:5000/api/userId/${assigneeId}`)
+                .then(res => res.json())
+                .then(res => {
+                    if (res.data.error === "Couldn't authenticate you") {
+                    } else {
+                        console.log(res.data)
+                        this.setState({
+                            assigneeName: res.data.user.name,
+                        })
+                    }
+                })
         
         const tagId = this.props.currentTicket.id
         const tags = fetch(`http://localhost:5000/api/tags/${tagId}`)
             .then(res => res.json())
             .then(res => {
                 if (res.data.error === "Couldn't authenticate you") {
-                    // this.props.enableErrorPage()
                 } else {
-                    // this.props.disableLoginPage()
-                    // this.props.updateTicketTable(res.data.requests)
                     console.log(res.data)
                     this.setState({
                         ticketTags: res.data.tags
@@ -79,7 +83,7 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
                 }
             })
 
-        Promise.all([organisationName, userName, tags])
+        Promise.all([organisationName, requesterName, assigneeId, tags])
     }
 
     public render() {

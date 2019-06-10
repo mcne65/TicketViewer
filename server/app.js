@@ -63,6 +63,27 @@ app.get('/userID', (req, res) => {
     })
 })
 
+app.get('/api/userId/:userId', (req, res) => {
+    console.log(req.params.userId)
+    const userId = req.params.userId
+    const apiUrl = `https://rozajaybird.zendesk.com/api/v2/users/${userId}.json` //User name retreval
+    
+    fetch(apiUrl, {
+        method:'GET',
+        headers: {
+            'Authorization': 'Basic ' + base64.encode(variables.email + ":" + variables.password)
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+        res.send({data});
+    })
+    .catch(err =>{
+        res.send({err});
+    })
+})
+
+
 
 app.get('/api/tags/:tagId', (req, res) => {
     console.log(req.params.tagId)
