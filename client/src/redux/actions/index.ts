@@ -17,3 +17,9 @@ export function disableLoginPage():any{
         type: 'DISABLE_LOGIN_PAGE',
     }
 }
+
+export function enableTicketsTablePage():any{
+    return{
+        type: 'ENABLE_TICKETSTABLE_PAGE',
+    }
+}

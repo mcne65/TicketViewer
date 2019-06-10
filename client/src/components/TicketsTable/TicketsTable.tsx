@@ -8,15 +8,15 @@ import SingleTicket from '../SingleTicket/SingleTicket'
 
 interface ITicketsTableState {
     page: number,
-    rowsPerPage: number
+    rowsPerPage: number,
 }
-
 
 interface ITicketsTableProps {
     enableErrorPage: () => void
     disableLoginPage: () => void
     updateTicketTable: (content: any) => void
-    tickets: any
+    tickets: any,
+    viewWholeTable: boolean,
 }
 
 class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableState> {
@@ -71,12 +71,13 @@ class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableStat
         } else {
             rows = undefined
         }
+        console.log(this.props.viewWholeTable)
 
 
         return (
             <Container fixed>
                 <SingleTicket />
-                {true?null:<Grid container spacing={1}>
+                {this.props.viewWholeTable ? <Grid container spacing={1}>
                     <Grid item xs={12}>
                         <Paper>
                             <div >
@@ -133,7 +134,7 @@ class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableStat
                             </div>
                         </Paper>
                     </Grid>
-                </Grid>}
+                </Grid>: null}
             </Container>
         )
     }
@@ -141,9 +142,10 @@ class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableStat
 }
 
 
-function mapStateToProps({ tickets }: ApplicationState) {
+function mapStateToProps({ tickets, viewWholeTable }: ApplicationState) {
     return {
-        tickets
+        tickets,
+        viewWholeTable
     }
 }
 

@@ -2,5 +2,6 @@ import { ApplicationState } from '../state/ApplicationState'
 
 export const InitialState: ApplicationState ={
     isUserValid: true,
-    disableLoginPage: false
+    disableLoginPage: false,
+    viewWholeTable: true
 }
