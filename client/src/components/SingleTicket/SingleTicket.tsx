@@ -1,6 +1,6 @@
 import * as React from 'react'
 import './styles.css'
-import { Typography, Button, Card, CardContent, Icon, Tooltip, Grid } from '@material-ui/core'
+import { Chip, Typography, Button, Card, CardContent, Icon, Tooltip, Grid } from '@material-ui/core'
 import { ApplicationState } from '../../redux/state/ApplicationState'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions/index'
@@ -15,7 +15,8 @@ interface ISingleTicketProps {
 interface ISingleTicketState {
     organisationName: string,
     assigneeName: string,
-    requesterName: string
+    requesterName: string,
+    ticketTags: any
 }
 
 class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketState> {
@@ -25,15 +26,16 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
         this.state = {
             organisationName: '',
             assigneeName: '',
-            requesterName: ''
+            requesterName: '',
+            ticketTags: []
         }
     }
 
-    componentDidMount(){
-            const organisationName = fetch("http://localhost:5000/organisationID")
+    componentDidMount() {
+        const organisationName = fetch("http://localhost:5000/organisationID")
             .then(res => res.json())
             .then(res => {
-                if (res.data.error === "Couldn't authenticate you"){
+                if (res.data.error === "Couldn't authenticate you") {
                     // this.props.enableErrorPage()
                 } else {
                     // this.props.disableLoginPage()
@@ -45,10 +47,10 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
                 }
             })
 
-            const userName = fetch("http://localhost:5000/userID")
+        const userName = fetch("http://localhost:5000/userID")
             .then(res => res.json())
             .then(res => {
-                if (res.data.error === "Couldn't authenticate you"){
+                if (res.data.error === "Couldn't authenticate you") {
                     // this.props.enableErrorPage()
                 } else {
                     // this.props.disableLoginPage()
@@ -61,11 +63,29 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
                 }
             })
 
-            Promise.all([organisationName, userName])
+
+        const tags = fetch("http://localhost:5000/tags")
+            .then(res => res.json())
+            .then(res => {
+                if (res.data.error === "Couldn't authenticate you") {
+                    // this.props.enableErrorPage()
+                } else {
+                    // this.props.disableLoginPage()
+                    // this.props.updateTicketTable(res.data.requests)
+                    console.log(res.data)
+                    this.setState({
+                        ticketTags: res.data.tags
+                    })
+                }
+            })
+
+        Promise.all([organisationName, userName, tags])
     }
 
     public render() {
         const currentTicket = this.props.currentTicket
+        const ticketTags = this.state.ticketTags
+        console.log(this.state.ticketTags)
         return (
             <div className={'single-ticket-page'}>
                 <Card>
@@ -121,6 +141,19 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
                             <Typography variant="h5" component="h4">
                                 <b>Labels:</b>
                             </Typography>
+                        </Grid>
+                        <Grid item xs={1}>
+                        </Grid>
+                        <Grid item xs={10}>
+                            {
+                                ticketTags.map(
+                                    (elem: any) => {
+                                        return <Chip key={elem} variant="outlined" size="small" label={elem} />;
+                                    }
+                                )
+                            }
+                        </Grid>
+                        <Grid item xs={1}>
                         </Grid>
                         <Grid item xs={1}>
                         </Grid>
