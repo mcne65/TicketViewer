@@ -12,7 +12,7 @@ interface ITicketsTableState {
 }
 
 interface ITicketsTableProps {
-    enableSingleTicketPage: () => void,
+    enableSingleTicketPage: (row:any) => void,
     resetApplication: () => void
     tickets: any,
     viewWholeTable: boolean,
@@ -57,16 +57,17 @@ class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableStat
         let emptyRows = 0
 
         if (this.props.tickets !== undefined) {
-            rows = this.props.tickets.map((ticket: any) => {
-                return {
-                    id: ticket.id,
-                    status: ticket.status,
-                    subject: (ticket.subject.length > 50) ? ticket.subject.substring(0, 50) + '...' : ticket.subject,
-                    is_public: ticket.is_public,
-                    created_at: ticket.created_at,
-                    updated_at: ticket.updated_at
-                }
-            })
+            // rows = this.props.tickets.map((ticket: any) => {
+            //     return {
+            //         id: ticket.id,
+            //         status: ticket.status,
+            //         subject: (ticket.subject.length > 50) ? ticket.subject.substring(0, 50) + '...' : ticket.subject,
+            //         is_public: ticket.is_public,
+            //         created_at: ticket.created_at,
+            //         updated_at: ticket.updated_at
+            //     }
+            // })
+            rows = this.props.tickets
             emptyRows = this.state.rowsPerPage - Math.min(this.state.rowsPerPage, rows.length - this.state.page * this.state.rowsPerPage);
         } else {
             rows = undefined
@@ -125,9 +126,7 @@ class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableStat
                                                     <TableCell> Updated at </TableCell>
                                                 </TableRow>
                                             </TableHead>
-                                            <TableBody
-                                                onClick={this.props.enableSingleTicketPage}
-                                            >
+                                            <TableBody>
                                                 {rows === undefined
                                                     ?
                                                     null
@@ -138,6 +137,10 @@ class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableStat
                                                                 key={row.id}
                                                                 hover
                                                                 className={'table-row'}
+                                                                onClick={()=>{
+                                                                    console.log(row)
+                                                                    return this.props.enableSingleTicketPage(row)
+                                                                }}
                                                             >
                                                                 <TableCell>
                                                                     {row.id}
@@ -169,7 +172,6 @@ class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableStat
 
 }
 
-
 function mapStateToProps({ tickets, viewWholeTable, viewSingleTicketPage }: ApplicationState) {
     return {
         tickets,
@@ -180,7 +182,10 @@ function mapStateToProps({ tickets, viewWholeTable, viewSingleTicketPage }: Appl
 
 function mapDispatchToProps(dispatch: any) {
     return {
-        enableSingleTicketPage: () => dispatch(actions.enableSingleTicketPage()),
+        enableSingleTicketPage: (row:any) => {
+            console.log(row)
+            return (dispatch(actions.enableSingleTicketPage(row)))
+        },
         resetApplication: () => dispatch(actions.resetApplication()),
         updateTicketTable: (content: any) => dispatch(actions.updateTicketTable(content)),
         disableLoginPage: () => dispatch(actions.disableLoginPage()),

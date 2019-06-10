@@ -7,7 +7,7 @@ import * as actions from '../../redux/actions/index'
 
 interface ISingleTicketProps {
     enableTicketsTablePage: () => void
-    tickets: any
+    currentTicket: any
 }
 
 class SingleTicket extends React.Component<ISingleTicketProps> {
@@ -20,7 +20,7 @@ class SingleTicket extends React.Component<ISingleTicketProps> {
     }
 
     public render() {
-
+        const currentTicket = this.props.currentTicket
         return (
             <div className={'single-ticket-page'}>
                 <Card>
@@ -31,8 +31,8 @@ class SingleTicket extends React.Component<ISingleTicketProps> {
                             gutterBottom align="left"
                             variant="h5"
                         >
-                            Ticket (ID: 1) Details
-                        {true ?
+                            Ticket (ID: {currentTicket.id}) Details
+                        {!currentTicket.can_be_solved_by_me ?
                                 <Tooltip title="Not solvable by me" placement="top">
                                     <Icon style={{ color: 'red', marginLeft: '2px' }}>
                                         cancel
@@ -88,10 +88,10 @@ class SingleTicket extends React.Component<ISingleTicketProps> {
 }
 
 
-function mapStateToProps({ isUserValid, tickets }: ApplicationState) {
+function mapStateToProps({ isUserValid, currentTicket }: ApplicationState) {
     return {
         isUserValid,
-        tickets
+        currentTicket
     }
 }
 

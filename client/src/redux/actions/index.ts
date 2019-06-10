@@ -24,9 +24,11 @@ export function enableTicketsTablePage():any{
     }
 }
 
-export function enableSingleTicketPage():any{
+export function enableSingleTicketPage(row:any):any{
+    console.log(row)
     return{
         type: 'ENABLE_SINGLE_TICKET_PAGE',
+        payload: row
     }
 }
 

@@ -17,7 +17,7 @@ export function rootReducer(state = InitialState, action: any) {
         case 'ENABLE_TICKETSTABLE_PAGE':
             return { ...state, viewWholeTable: true, viewSingleTicketPage: false }
         case 'ENABLE_SINGLE_TICKET_PAGE':
-            return { ...state, viewSingleTicketPage: true, viewWholeTable:false }
+            return { ...state, viewSingleTicketPage: true, viewWholeTable:false, currentTicket: action.payload }
         case 'RESET_APPLICATION':
             return { ...InitialState}
         default:
