@@ -29,3 +29,9 @@ export function enableSingleTicketPage():any{
         type: 'ENABLE_SINGLE_TICKET_PAGE',
     }
 }
+
+export function resetApplication():any{
+    return{
+        type: 'RESET_APPLICATION',
+    }
+}

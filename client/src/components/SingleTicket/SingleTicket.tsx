@@ -1,6 +1,6 @@
 import * as React from 'react'
-// import './styles.css'
-import { Fab, CardActions, Typography, Button, Card, CardContent, Icon, Tooltip } from '@material-ui/core'
+import './styles.css'
+import { CardActions, Typography, Button, Card, CardContent, Icon, Tooltip } from '@material-ui/core'
 import { ApplicationState } from '../../redux/state/ApplicationState'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions/index'
@@ -12,10 +12,6 @@ interface ISingleTicketProps {
 
 class SingleTicket extends React.Component<ISingleTicketProps> {
 
-    constructor(props: any) {
-        super(props)
-    }
-
     handleOnClick(event: React.SyntheticEvent) {
         let currentTarget = event.currentTarget as HTMLInputElement
         this.setState({
@@ -23,18 +19,10 @@ class SingleTicket extends React.Component<ISingleTicketProps> {
         })
     }
 
-    handleOnPasswordChange(event: React.SyntheticEvent) {
-        let currentTarget = event.currentTarget as HTMLInputElement
-        this.setState({
-            password: currentTarget.value
-        })
-    }
-
-
     public render() {
 
         return (
-            <div className={'login-page'}>
+            <div className={'single-ticket-page'}>
                 <Card>
                     <CardContent>
                         <Typography

@@ -5,7 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux'
-import { InitialState } from './redux/state/InitialState'
+// import { InitialState } from './redux/state/InitialState'
 import { rootReducer } from './redux/reducers/index'
 
 ReactDOM.render(

@@ -10,6 +10,8 @@ export function rootReducer(state = { isUserValid: true, viewWholeTable: true, v
             return { ...state, viewWholeTable: true, viewSingleTicketPage: false }
         case 'ENABLE_SINGLE_TICKET_PAGE':
             return { ...state, viewSingleTicketPage: true, viewWholeTable:false }
+        case 'RESET_APPLICATION':
+            return { disableLoginPage: false, viewWholeTable: false, viewSingleTicketPage: false, isUserValid: true, tickets:''}
         default:
             return state
     }
