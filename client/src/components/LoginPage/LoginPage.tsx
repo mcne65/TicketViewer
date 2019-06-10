@@ -15,7 +15,7 @@ interface ILoginPageState {
 interface ILoginPageProps {
     enableErrorPage: () => void
     disableLoginPage: () => void
-    updateTicketTable: (content:any) => void
+    updateTicketTable: (content: any) => void
     tickets: any
 }
 
@@ -29,35 +29,37 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
         }
     }
 
-    handleOnEmailChange(event: React.SyntheticEvent){
+    handleOnEmailChange(event: React.SyntheticEvent) {
         let currentTarget = event.currentTarget as HTMLInputElement
         this.setState({
             email: currentTarget.value
         })
     }
 
-    handleOnPasswordChange(event: React.SyntheticEvent){
+    handleOnPasswordChange(event: React.SyntheticEvent) {
         let currentTarget = event.currentTarget as HTMLInputElement
         this.setState({
             password: currentTarget.value
         })
     }
 
-    handleOnSignin(event: React.SyntheticEvent){
-        fetch("http://localhost:5000/")
-        .then(res => res.json())
-        .then(res => {
-            if (res.data.error === "Couldn't authenticate you"){
-                this.props.enableErrorPage()
-            } else {
-                this.props.disableLoginPage()
-                this.props.updateTicketTable(res.data.requests)
-            }
-        })
-
+    handleOnSignin(event: React.SyntheticEvent) {
+        const email = this.state.email
+        const password = this.state.password
+        fetch(`http://localhost:5000/api/${email}/${password}`)
+            .then(res => res.json())
+            .then(res => {
+                if (res.data.error === "Couldn't authenticate you") {
+                    this.props.enableErrorPage()
+                } else {
+                    this.props.disableLoginPage()
+                    this.props.updateTicketTable(res.data.requests)
+                }
+            })
     }
 
     public render() {
+        const { email, password } = this.state
         return (
             <div className={'login-page'}>
                 <Container fixed>
@@ -86,14 +88,15 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
                         </Grid>
                         <Grid item xs={12}>
                             <Button
-                                style={{ 
-                                    margin: '15px', 
-                                    width: '223px', 
+                                style={{
+                                    margin: '15px',
+                                    width: '223px',
                                     backgroundColor: '#0E373D',
                                     color: 'white'
                                 }}
                                 variant="contained"
                                 disableRipple
+                                disabled={(email.length > 1 && password.length > 1) ? false : true}
                                 onClick={(e) => this.handleOnSignin(e)}
                             >
                                 Sign in
@@ -108,20 +111,20 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
 }
 
 
-function mapStateToProps({isUserValid, tickets}: ApplicationState){
+function mapStateToProps({ isUserValid, tickets }: ApplicationState) {
     return {
-      isUserValid,
-      tickets
+        isUserValid,
+        tickets
     }
-  }
+}
 
-function mapDispatchToProps(dispatch:any){
+function mapDispatchToProps(dispatch: any) {
     return {
         enableErrorPage: () => dispatch(actions.enableErrorPage()),
-        updateTicketTable: (content:any) => dispatch(actions.updateTicketTable(content)),
+        updateTicketTable: (content: any) => dispatch(actions.updateTicketTable(content)),
         disableLoginPage: () => dispatch(actions.disableLoginPage()),
     }
 }
-  
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(LoginPage)
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage)

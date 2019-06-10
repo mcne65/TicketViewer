@@ -26,6 +26,25 @@ app.get('/', (req, res) => {
     })
 })
 
+app.get('/api/:email/:password', (req, res) => {
+    const apiUrl = 'https://rozajaybird.zendesk.com/api/v2/requests.json'
+    const email = req.params.email
+    const password = req.params.password
+    fetch(apiUrl, {
+        method:'GET',
+        headers: {
+            'Authorization': 'Basic ' + base64.encode(email + ":" + password)
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+        res.send({data});
+    })
+    .catch(err =>{
+        res.send({err});
+    })
+})
+
 app.get('/api/organisationId/:organisationId', (req, res) => {
     console.log(req.params.organisationId)
     const organisationId = req.params.organisationId
@@ -47,7 +66,6 @@ app.get('/api/organisationId/:organisationId', (req, res) => {
 })
 
 app.get('/api/userId/:userId', (req, res) => {
-    console.log(req.params.userId)
     const userId = req.params.userId
     const apiUrl = `https://rozajaybird.zendesk.com/api/v2/users/${userId}.json` //User name retreval
     
@@ -69,7 +87,6 @@ app.get('/api/userId/:userId', (req, res) => {
 
 
 app.get('/api/tags/:tagId', (req, res) => {
-    console.log(req.params.tagId)
     const tagId = req.params.tagId
     const apiUrl = `https://rozajaybird.zendesk.com/api/v2/tickets/${tagId}/tags.json` //tags
     
