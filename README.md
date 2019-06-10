@@ -3,6 +3,36 @@ Solution for the coding challenge Ticket Viewer
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Instructions on running the project
+In order to run the project first open up the server folder
+
+### `cd server`
+
+Install relevant node modules
+
+### `npm install`
+
+Run the node server file
+
+### `node app.js`
+
+Then proceed back to the main directory
+
+### `cd ..`
+
+Open the client folder
+
+### `cd client`
+
+Install relevant node modules
+
+### `npm install`
+
+Run the application by
+
+### `npm run start`
+
+### 
 ## Available Scripts
 
 In the project directory, you can run:

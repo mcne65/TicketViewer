@@ -48,6 +48,8 @@ class SingleTicket extends React.Component<ISingleTicketProps> {
                     </CardContent>
                     <CardActions>
                         <Button 
+                        variant="outlined"
+                        color="primary"
                         size="medium"
                         onClick={this.props.enableTicketsTablePage}
                         > Back to all tickets </Button>
