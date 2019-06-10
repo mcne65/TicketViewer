@@ -1,6 +1,6 @@
 import * as React from 'react'
 import './styles.css'
-import { Chip, Typography, Button, Card, CardContent, Icon, Tooltip, Grid } from '@material-ui/core'
+import { Chip, Typography, Button, Card, CardContent, Icon, Tooltip, Grid, CircularProgress } from '@material-ui/core'
 import { ApplicationState } from '../../redux/state/ApplicationState'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions/index'
@@ -83,7 +83,7 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
                 }
             })
 
-        Promise.all([organisationName, requesterName, assigneeId, tags])
+        Promise.all([organisationName, requesterName, assigneeName, tags])
     }
 
     public render() {
@@ -91,7 +91,9 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
         const ticketTags = this.state.ticketTags
         console.log(this.state.ticketTags)
         return (
+
             <div className={'single-ticket-page'}>
+                { (this.state.assigneeName!=='')?
                 <Card>
                     <CardContent>
                         <Typography
@@ -213,7 +215,7 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
                             </Grid>
                         </Grid>
                     </CardContent>
-                </Card>
+                </Card> : <CircularProgress style={{position: 'relative'}} />}
             </div>
         )
     }
