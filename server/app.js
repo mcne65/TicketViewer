@@ -11,6 +11,8 @@ app.use(cors())
 app.get('/', (req, res) => {
     const apiUrl = 'https://rozajaybird.zendesk.com/api/v2/requests.json'
     // const apiUrl = 'https://rozajaybird.zendesk.com/api/v2/requests/2.json'
+    // const apiUrl = 'https://rozajaybird.zendesk.com/api/v2/organizations/367153076173.json' //Organisation id retrieval
+    // const apiUrl = 'https://rozajaybird.zendesk.com/api/v2/users/381562748273.json' //User name retreval
     
     fetch(apiUrl, {
         method:'GET',
@@ -26,5 +28,49 @@ app.get('/', (req, res) => {
         res.send({err});
     })
 })
+
+app.get('/organisationID', (req, res) => {
+    // const apiUrl = 'https://rozajaybird.zendesk.com/api/v2/requests.json'
+    // const apiUrl = 'https://rozajaybird.zendesk.com/api/v2/requests/2.json'
+    const apiUrl = 'https://rozajaybird.zendesk.com/api/v2/organizations/367153076173.json' //Organisation id retrieval
+    // const apiUrl = 'https://rozajaybird.zendesk.com/api/v2/users/381562748273.json' //User name retreval
+    
+    fetch(apiUrl, {
+        method:'GET',
+        headers: {
+            'Authorization': 'Basic ' + base64.encode(variables.email + ":" + variables.password)
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+        res.send({data});
+    })
+    .catch(err =>{
+        res.send({err});
+    })
+})
+
+
+app.get('/userID', (req, res) => {
+    // const apiUrl = 'https://rozajaybird.zendesk.com/api/v2/requests.json'
+    // const apiUrl = 'https://rozajaybird.zendesk.com/api/v2/requests/2.json'
+    // const apiUrl = 'https://rozajaybird.zendesk.com/api/v2/organizations/367153076173.json' //Organisation id retrieval
+    const apiUrl = 'https://rozajaybird.zendesk.com/api/v2/users/381562748273.json' //User name retreval
+    
+    fetch(apiUrl, {
+        method:'GET',
+        headers: {
+            'Authorization': 'Basic ' + base64.encode(variables.email + ":" + variables.password)
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+        res.send({data});
+    })
+    .catch(err =>{
+        res.send({err});
+    })
+})
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}`))
