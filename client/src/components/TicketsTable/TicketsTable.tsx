@@ -81,11 +81,17 @@ class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableStat
                         <Grid container spacing={1}>
                             <Grid item xs={2}>
                                 <Button
-                                variant="outlined"
-                                color="secondary"
-                                style={{marginTop:'10px'}}
+                                style={{ 
+                                    marginTop: '10px', 
+                
+                                    backgroundColor: '#0E373D',
+                                    color: 'white'
+                                }}
+                                variant="contained"
                                 onClick={this.props.resetApplication}
-                                > Sign out </Button>
+                                > 
+                                Sign out 
+                                </Button>
                             </Grid>
                             <Grid item xs={2}>
                             </Grid>

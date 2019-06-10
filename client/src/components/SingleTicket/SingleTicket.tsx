@@ -71,8 +71,11 @@ class SingleTicket extends React.Component<ISingleTicketProps> {
                     </Grid>
                     <CardActions>
                         <Button
+                            style={{
+                                backgroundColor: '#0E373D',
+                                color: 'white'
+                            }}
                             variant="outlined"
-                            color="primary"
                             size="medium"
                             onClick={this.props.enableTicketsTablePage}
                         > Back to all tickets </Button>

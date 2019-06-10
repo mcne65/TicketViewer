@@ -86,9 +86,13 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
                         </Grid>
                         <Grid item xs={12}>
                             <Button
-                                style={{ margin: '15px', width: '223px' }}
+                                style={{ 
+                                    margin: '15px', 
+                                    width: '223px', 
+                                    backgroundColor: '#0E373D',
+                                    color: 'white'
+                                }}
                                 variant="contained"
-                                color="primary"
                                 disableRipple
                                 onClick={(e) => this.handleOnSignin(e)}
                             >
