@@ -62,9 +62,9 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
                     })
                 }
             })
-
-
-        const tags = fetch("http://localhost:5000/tags")
+        
+        const tagId = this.props.currentTicket.id
+        const tags = fetch(`http://localhost:5000/api/tags/${tagId}`)
             .then(res => res.json())
             .then(res => {
                 if (res.data.error === "Couldn't authenticate you") {

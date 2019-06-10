@@ -63,8 +63,11 @@ app.get('/userID', (req, res) => {
     })
 })
 
-app.get('/tags', (req, res) => {
-    const apiUrl = 'https://rozajaybird.zendesk.com/api/v2/tickets/2/tags.json' //tags
+
+app.get('/api/tags/:tagId', (req, res) => {
+    console.log(req.params.tagId)
+    const tagId = req.params.tagId
+    const apiUrl = `https://rozajaybird.zendesk.com/api/v2/tickets/${tagId}/tags.json` //tags
     
     fetch(apiUrl, {
         method:'GET',
@@ -80,6 +83,7 @@ app.get('/tags', (req, res) => {
         res.send({err});
     })
 })
+
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}`))
