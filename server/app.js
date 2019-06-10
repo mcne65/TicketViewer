@@ -26,27 +26,10 @@ app.get('/', (req, res) => {
     })
 })
 
-app.get('/organisationID', (req, res) => {
-    const apiUrl = 'https://rozajaybird.zendesk.com/api/v2/organizations/367153076173.json' //Organisation id retrieval
-    
-    fetch(apiUrl, {
-        method:'GET',
-        headers: {
-            'Authorization': 'Basic ' + base64.encode(variables.email + ":" + variables.password)
-        }
-    })
-    .then(res => res.json())
-    .then(data => {
-        res.send({data});
-    })
-    .catch(err =>{
-        res.send({err});
-    })
-})
-
-
-app.get('/userID', (req, res) => {
-    const apiUrl = 'https://rozajaybird.zendesk.com/api/v2/users/381562748273.json' //User name retreval
+app.get('/api/organisationId/:organisationId', (req, res) => {
+    console.log(req.params.organisationId)
+    const organisationId = req.params.organisationId
+    const apiUrl = `https://rozajaybird.zendesk.com/api/v2/organizations/${organisationId}.json` //Organisation id retrieval
     
     fetch(apiUrl, {
         method:'GET',

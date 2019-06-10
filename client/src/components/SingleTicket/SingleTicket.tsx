@@ -32,7 +32,8 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
     }
 
     componentDidMount() {
-        const organisationName = fetch("http://localhost:5000/organisationID")
+        const organisationId = this.props.currentTicket.organisation_id
+        const organisationName = fetch(`http://localhost:5000/api/userId/${organisationId}`)
             .then(res => res.json())
             .then(res => {
                 if (res.data.error === "Couldn't authenticate you") {
