@@ -49,7 +49,7 @@ app.get('/api/organisationId/:organisationId', (req, res) => {
     console.log(req.params.organisationId)
     const organisationId = req.params.organisationId
     const apiUrl = `https://rozajaybird.zendesk.com/api/v2/organizations/${organisationId}.json` //Organisation id retrieval
-    
+    console.log(variables.email)
     fetch(apiUrl, {
         method:'GET',
         headers: {

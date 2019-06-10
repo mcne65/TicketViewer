@@ -44,8 +44,7 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
     }
 
     handleOnSignin(event: React.SyntheticEvent) {
-        const email = this.state.email
-        const password = this.state.password
+        const { email, password } = this.state
         fetch(`http://localhost:5000/api/${email}/${password}`)
             .then(res => res.json())
             .then(res => {
