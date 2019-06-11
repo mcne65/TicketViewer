@@ -14,7 +14,6 @@ interface IAppProps {
 
 class App extends React.Component<IAppProps>{
   public render (){
-    console.log(this.props.isUserValid)
     return (
       <div className="App">
         <Header />

@@ -35,7 +35,6 @@ class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableStat
         event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
         newPage: number,
     ) {
-        console.log(newPage)
         this.setState({
             page: newPage
         })
@@ -45,7 +44,6 @@ class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableStat
     handleChangeRowsPerPage(
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) {
-        console.log(event.target.value)
         this.setState({
             rowsPerPage: parseInt(event.target.value, 10)
         })
@@ -57,16 +55,6 @@ class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableStat
         let emptyRows = 0
 
         if (this.props.tickets !== undefined) {
-            // rows = this.props.tickets.map((ticket: any) => {
-            //     return {
-            //         id: ticket.id,
-            //         status: ticket.status,
-            //         subject: (ticket.subject.length > 50) ? ticket.subject.substring(0, 50) + '...' : ticket.subject,
-            //         is_public: ticket.is_public,
-            //         created_at: ticket.created_at,
-            //         updated_at: ticket.updated_at
-            //     }
-            // })
             rows = this.props.tickets
             emptyRows = this.state.rowsPerPage - Math.min(this.state.rowsPerPage, rows.length - this.state.page * this.state.rowsPerPage);
         } else {
@@ -138,7 +126,6 @@ class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableStat
                                                                 hover
                                                                 className={'table-row'}
                                                                 onClick={()=>{
-                                                                    console.log(row)
                                                                     return this.props.enableSingleTicketPage(row)
                                                                 }}
                                                             >
@@ -182,10 +169,7 @@ function mapStateToProps({ tickets, viewWholeTable, viewSingleTicketPage }: Appl
 
 function mapDispatchToProps(dispatch: any) {
     return {
-        enableSingleTicketPage: (row:any) => {
-            console.log(row)
-            return (dispatch(actions.enableSingleTicketPage(row)))
-        },
+        enableSingleTicketPage: (row:any) => dispatch(actions.enableSingleTicketPage(row)),
         resetApplication: () => dispatch(actions.resetApplication()),
         updateTicketTable: (content: any) => dispatch(actions.updateTicketTable(content)),
         disableLoginPage: () => dispatch(actions.disableLoginPage()),

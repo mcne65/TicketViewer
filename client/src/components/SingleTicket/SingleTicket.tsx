@@ -41,7 +41,6 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
             .then(res => {
                 if (res.data.error === "Couldn't authenticate you") {
                 } else {
-                    console.log(res.data)
                     this.setState({
                         organisationName: res.data.organization.name
                     })
@@ -54,7 +53,6 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
             .then(res => {
                 if (res.data.error === "Couldn't authenticate you") {
                 } else {
-                    console.log(res.data)
                     this.setState({
                         requesterName: res.data.user.name,
                     })
@@ -67,7 +65,6 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
                 .then(res => {
                     if (res.data.error === "Couldn't authenticate you") {
                     } else {
-                        console.log(res.data)
                         this.setState({
                             assigneeName: res.data.user.name,
                         })
@@ -80,7 +77,6 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
             .then(res => {
                 if (res.data.error === "Couldn't authenticate you") {
                 } else {
-                    console.log(res.data)
                     this.setState({
                         ticketTags: res.data.tags
                     })
@@ -93,7 +89,6 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
     public render() {
         const currentTicket = this.props.currentTicket
         const ticketTags = this.state.ticketTags
-        console.log(this.state.ticketTags)
         return (
 
             <div className={'single-ticket-page'}>

@@ -49,7 +49,6 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
         fetch(`http://localhost:5000/api/tickets/${email}/${password}`)
             .then(res => res.json())
             .then(res => {
-                console.log(res)
                 if (res.err) {
                     this.props.enableErrorPage()
                 } else {
