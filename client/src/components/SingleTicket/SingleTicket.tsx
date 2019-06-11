@@ -39,7 +39,8 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
         const organisationName = fetch(`http://localhost:5000/api/organisationId/${organisationId}/${sessionEmail}/${sessionPassword}`)
             .then(res => res.json())
             .then(res => {
-                if (res.data.error === "Couldn't authenticate you") {
+                if (res.data.error) {
+                    this.props.enableErrorPage('Problem with ticket retrieval')
                 } else {
                     this.setState({
                         organisationName: res.data.organization.name
@@ -53,7 +54,8 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
         const requesterName = fetch(`http://localhost:5000/api/userId/${requesterId}/${sessionEmail}/${sessionPassword}`)
             .then(res => res.json())
             .then(res => {
-                if (res.data.error === "Couldn't authenticate you") {
+                if (res.data.error) {
+                    this.props.enableErrorPage('Problem with ticket retrieval')
                 } else {
                     this.setState({
                         requesterName: res.data.user.name,
@@ -64,10 +66,11 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
             })
 
         const assigneeId = this.props.currentTicket.assignee_id
-        const assigneeName = fetch(`http://localhost:5000/api/userId/${assigneeId}/${sessionEmail}/${sessionPassword}`)
+        const assigneeName = fetch(`http://localhost:5000/api/userId/${assigneeId}/${sessionEmail}/${sessionPassword}s`)
             .then(res => res.json())
             .then(res => {
-                if (res.data.error === "Couldn't authenticate you") {
+                if (res.data.error) {
+                    this.props.enableErrorPage('Problem with ticket retrieval')
                 } else {
                     this.setState({
                         assigneeName: res.data.user.name,
@@ -81,7 +84,8 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
         const tags = fetch(`http://localhost:5000/api/tags/${tagId}/${sessionEmail}/${sessionPassword}`)
             .then(res => res.json())
             .then(res => {
-                if (res.data.error === "Couldn't authenticate you") {
+                if (res.data.error) {
+                    this.props.enableErrorPage('Problem with ticket retrieval')
                 } else {
                     this.setState({
                         ticketTags: res.data.tags
