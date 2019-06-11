@@ -1,7 +1,8 @@
 
-export function enableErrorPage():any{
+export function enableErrorPage(errorMessage:string):any{
     return{
         type: 'ENABLE_ERROR_PAGE',
+        payload: errorMessage
     }
 }
 

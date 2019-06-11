@@ -4,14 +4,15 @@ const InitialState = {
     viewSingleTicketPage: false,
     disableLoginPage: false,
     sessionEmail: '',
-    sessionPassword:''
+    sessionPassword:'',
+    errorMessage: ''
 }
 
 
 export function rootReducer(state = InitialState, action: any) {
     switch (action.type) {
         case 'ENABLE_ERROR_PAGE':
-            return { ...state, isUserValid: false }
+            return { ...state, isUserValid: false, errorMessage: action.payload }
         case 'UPDATE_TICKETS':
             return { ...state, tickets: action.content }
         case 'DISABLE_LOGIN_PAGE':

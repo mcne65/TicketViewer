@@ -13,7 +13,7 @@ interface ILoginPageState {
 
 
 interface ILoginPageProps {
-    enableErrorPage: () => void
+    enableErrorPage: (errorMessage:string) => void
     disableLoginPage: () => void
     updateTicketTable: (content: any) => void
     updateSessionIdentity: (email: string, password: string) => void
@@ -44,22 +44,24 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
         })
     }
 
-    handleOnSignin(event: React.SyntheticEvent) {
+    handleOnSignin() {
         const { email, password } = this.state
         fetch(`http://localhost:5000/api/tickets/${email}/${password}`)
             .then(res => res.json())
             .then(res => {
                 if (res.err) {
-                    this.props.enableErrorPage()
+                    this.props.enableErrorPage('Error occured, please try again later')
                 } else {
                     if (res.data.error === "Couldn't authenticate you") {
-                        this.props.enableErrorPage()
+                        this.props.enableErrorPage('Email address / password combination is incorrect, try again.')
                     } else {
                         this.props.disableLoginPage()
                         this.props.updateTicketTable(res.data.requests)
                         this.props.updateSessionIdentity(email, password)
                     }
                 }
+            }).catch(()=>{
+                this.props.enableErrorPage('Server unavailable, please contact zendesk support or try again later')
             })
     }
 
@@ -102,7 +104,7 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
                                 variant="contained"
                                 disableRipple
                                 disabled={(email.length > 1 && password.length > 1) ? false : true}
-                                onClick={(e) => this.handleOnSignin(e)}
+                                onClick={() => this.handleOnSignin()}
                             >
                                 Sign in
                             </Button>
@@ -125,7 +127,7 @@ function mapStateToProps({ isUserValid, tickets }: ApplicationState) {
 
 function mapDispatchToProps(dispatch: any) {
     return {
-        enableErrorPage: () => dispatch(actions.enableErrorPage()),
+        enableErrorPage: (errorMessage:string) => dispatch(actions.enableErrorPage(errorMessage)),
         updateTicketTable: (content: any) => dispatch(actions.updateTicketTable(content)),
         disableLoginPage: () => dispatch(actions.disableLoginPage()),
         updateSessionIdentity: (email: string, password: string) => dispatch(actions.updateSessionIdentity(email, password))

@@ -1,8 +1,14 @@
 import * as React from 'react'
 import './styles.css'
 import { Container, Grid, Typography } from '@material-ui/core'
+import { connect } from 'react-redux'
+import { ApplicationState } from '../../redux/state/ApplicationState'
 
-export class ErrorPage extends React.Component<any, any> {
+interface IErrorPageProps {
+    errorMessage: string
+}
+
+class ErrorPage extends React.Component<IErrorPageProps> {
 
     public render() {
         return (
@@ -12,7 +18,7 @@ export class ErrorPage extends React.Component<any, any> {
                         <Grid item xs={12}>
                             <Typography component="div" style={{ backgroundColor: '#ffeded', height: '50px' }}>
                                 <div style={{ paddingTop: '14px', fontSize: '14px' }}>
-                                    Email address / password combination is incorrect, try again.
+                                    {this.props.errorMessage}
                                 </div>
                             </Typography>
                         </Grid>
@@ -23,3 +29,11 @@ export class ErrorPage extends React.Component<any, any> {
     }
 
 }
+
+function mapStateToProps({ errorMessage }: ApplicationState) {
+    return {
+        errorMessage
+    }
+}
+
+export default connect(mapStateToProps)(ErrorPage)

@@ -5,6 +5,7 @@ export interface ApplicationState {
     viewSingleTicketPage: boolean,
     sessionEmail: string,
     sessionPassword: string,
+    errorMessage: string,
     currentTicket?: any,
     tickets?: any
 }
