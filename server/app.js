@@ -1,4 +1,3 @@
-const variables = require('../var')
 const express = require('express')
 const app = express()
 const port = 5000

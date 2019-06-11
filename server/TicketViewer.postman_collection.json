@@ -1,0 +1,101 @@
+{
+	"info": {
+		"_postman_id": "456ba619-e6b1-46f6-92e8-370f2e5c5966",
+		"name": "TicketViewer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "api/tickets Successful ticket retrieval",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "73eed15a-8e7d-4171-a9ae-c174aec6618d",
+						"exec": [
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Has valid tickets information\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.requests.length).to.be.above(0)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/tickets/{{email}}/{{password}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"tickets",
+						"{{email}}",
+						"{{password}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/tickets Authentication error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "59dd0c2b-e08a-45c4-9ace-cb439e178523",
+						"exec": [
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Authentication error\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.error).to.eql(\"Couldn't authenticate you\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/tickets/junzhuj/zen",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"tickets",
+						"junzhuj",
+						"zen"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
