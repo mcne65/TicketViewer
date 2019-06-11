@@ -7,10 +7,10 @@ import * as actions from '../../redux/actions/index'
 
 interface ISingleTicketProps {
     enableTicketsTablePage: () => void
+    enableErrorPage: (errorMessage: string) => void
     currentTicket: any,
     sessionEmail: string,
     sessionPassword: string
-
 }
 
 
@@ -34,7 +34,7 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
     }
 
     componentDidMount() {
-        const {sessionEmail, sessionPassword} = this.props
+        const { sessionEmail, sessionPassword } = this.props
         const organisationId = this.props.currentTicket.organization_id
         const organisationName = fetch(`http://localhost:5000/api/organisationId/${organisationId}/${sessionEmail}/${sessionPassword}`)
             .then(res => res.json())
@@ -45,6 +45,8 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
                         organisationName: res.data.organization.name
                     })
                 }
+            }).catch(() => {
+                this.props.enableErrorPage('Server unavailable, please try again later')
             })
 
         const requesterId = this.props.currentTicket.requester_id
@@ -57,20 +59,24 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
                         requesterName: res.data.user.name,
                     })
                 }
+            }).catch(() => {
+                this.props.enableErrorPage('Server unavailable, please try again later')
             })
 
-            const assigneeId = this.props.currentTicket.assignee_id
-            const assigneeName = fetch(`http://localhost:5000/api/userId/${assigneeId}/${sessionEmail}/${sessionPassword}`)
-                .then(res => res.json())
-                .then(res => {
-                    if (res.data.error === "Couldn't authenticate you") {
-                    } else {
-                        this.setState({
-                            assigneeName: res.data.user.name,
-                        })
-                    }
-                })
-        
+        const assigneeId = this.props.currentTicket.assignee_id
+        const assigneeName = fetch(`http://localhost:5000/api/userId/${assigneeId}/${sessionEmail}/${sessionPassword}`)
+            .then(res => res.json())
+            .then(res => {
+                if (res.data.error === "Couldn't authenticate you") {
+                } else {
+                    this.setState({
+                        assigneeName: res.data.user.name,
+                    })
+                }
+            }).catch(() => {
+                this.props.enableErrorPage('Server unavailable, please try again later')
+            })
+
         const tagId = this.props.currentTicket.id
         const tags = fetch(`http://localhost:5000/api/tags/${tagId}/${sessionEmail}/${sessionPassword}`)
             .then(res => res.json())
@@ -81,6 +87,8 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
                         ticketTags: res.data.tags
                     })
                 }
+            }).catch(() => {
+                this.props.enableErrorPage('Server unavailable, please try again later')
             })
 
         Promise.all([organisationName, requesterName, assigneeName, tags])
@@ -92,129 +100,129 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
         return (
 
             <div className={'single-ticket-page'}>
-                { (this.state.assigneeName!=='')?
-                <Card>
-                    <CardContent>
-                        <Typography
-                            className={'card-title'}
-                            color="textPrimary"
-                            gutterBottom align="left"
-                            variant="h5"
-                        >
-                            Ticket (ID: {currentTicket.id}) Details
+                {(this.state.assigneeName !== '') ?
+                    <Card>
+                        <CardContent>
+                            <Typography
+                                className={'card-title'}
+                                color="textPrimary"
+                                gutterBottom align="left"
+                                variant="h5"
+                            >
+                                Ticket (ID: {currentTicket.id}) Details
                         {!currentTicket.can_be_solved_by_me ?
-                                <Tooltip title="Not solvable by me" placement="top">
-                                    <Icon style={{ color: 'red', marginLeft: '2px' }}>
-                                        cancel
+                                    <Tooltip title="Not solvable by me" placement="top">
+                                        <Icon style={{ color: 'red', marginLeft: '2px' }}>
+                                            cancel
                                     </Icon>
-                                </Tooltip> :
-                                <Tooltip title="Solvable by me" placement="top">
-                                    <Icon style={{ color: 'green', marginLeft: '2px' }}>
-                                        check_circle
+                                    </Tooltip> :
+                                    <Tooltip title="Solvable by me" placement="top">
+                                        <Icon style={{ color: 'green', marginLeft: '2px' }}>
+                                            check_circle
                                     </Icon>
-                                </Tooltip>}
-                        </Typography>
-                    </CardContent>
-                    <Grid container spacing={1}>
-                        <Grid item xs={1}>
-                        </Grid>
-                        <Grid item xs={5}>
-                            <Typography variant="h5" component="h4">
-                                <b>Status:</b> {currentTicket.status}
+                                    </Tooltip>}
                             </Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Typography variant="h5" component="h4">
-                                <b>Requester:</b> {this.state.requesterName}
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={1}>
-                        </Grid>
-                        <Grid item xs={5}>
-                            <Typography variant="h5" component="h4">
-                                <b>Organisation:</b> {this.state.organisationName}
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Typography variant="h5" component="h4">
-                                <b>Assignee:</b> {this.state.assigneeName}
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={1}>
-                        </Grid>
-                        <Grid item xs={11}>
-                            <Typography variant="h5" component="h4">
-                                <b>Labels:</b>
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={1}>
-                        </Grid>
-                        <Grid item xs={10}>
-                            {
-                                ticketTags.map(
-                                    (elem: any) => {
-                                        return <Chip key={elem} variant="outlined" size="small" label={elem} />;
-                                    }
-                                )
-                            }
-                        </Grid>
-                        <Grid item xs={1}>
-                        </Grid>
-                        <Grid item xs={1}>
-                        </Grid>
-                        <Grid item xs={10}>
-                            <Typography variant="h5" component="h3">
-                                <b>Subject:</b>
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={1}>
-                        </Grid>
-                        <Grid item xs={1}>
-                        </Grid>
-                        <Grid item xs={10}>
-                            <Typography variant="body2" component="p">
-                                {currentTicket.subject}
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={1}>
-                        </Grid>
-                        <Grid item xs={1}>
-                        </Grid>
-                        <Grid item xs={10}>
-                            <Typography variant="h5" component="h3">
-                                <b>Description:</b>
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={1}>
-                        </Grid>
-                        <Grid item xs={1}>
-                        </Grid>
-                        <Grid item xs={10}>
-                            <Typography variant="body2" component="p">
-                                {currentTicket.description}
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={1}>
-                        </Grid>
-                    </Grid>
-                    <CardContent>
+                        </CardContent>
                         <Grid container spacing={1}>
-                            <Grid item xs={10}>
+                            <Grid item xs={1}>
                             </Grid>
-                            <Grid item xs={2}>
-                                <Button
-                                    style={{
-                                        backgroundColor: '#0E373D',
-                                        color: 'white'
-                                    }}
-                                    variant="outlined"
-                                    size="medium"
-                                    onClick={this.props.enableTicketsTablePage}
-                                > Back to all tickets </Button>
+                            <Grid item xs={5}>
+                                <Typography variant="h5" component="h4">
+                                    <b>Status:</b> {currentTicket.status}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography variant="h5" component="h4">
+                                    <b>Requester:</b> {this.state.requesterName}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={1}>
+                            </Grid>
+                            <Grid item xs={5}>
+                                <Typography variant="h5" component="h4">
+                                    <b>Organisation:</b> {this.state.organisationName}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography variant="h5" component="h4">
+                                    <b>Assignee:</b> {this.state.assigneeName}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={1}>
+                            </Grid>
+                            <Grid item xs={11}>
+                                <Typography variant="h5" component="h4">
+                                    <b>Labels:</b>
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={1}>
+                            </Grid>
+                            <Grid item xs={10}>
+                                {
+                                    ticketTags.map(
+                                        (elem: any) => {
+                                            return <Chip key={elem} variant="outlined" size="small" label={elem} />;
+                                        }
+                                    )
+                                }
+                            </Grid>
+                            <Grid item xs={1}>
+                            </Grid>
+                            <Grid item xs={1}>
+                            </Grid>
+                            <Grid item xs={10}>
+                                <Typography variant="h5" component="h3">
+                                    <b>Subject:</b>
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={1}>
+                            </Grid>
+                            <Grid item xs={1}>
+                            </Grid>
+                            <Grid item xs={10}>
+                                <Typography variant="body2" component="p">
+                                    {currentTicket.subject}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={1}>
+                            </Grid>
+                            <Grid item xs={1}>
+                            </Grid>
+                            <Grid item xs={10}>
+                                <Typography variant="h5" component="h3">
+                                    <b>Description:</b>
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={1}>
+                            </Grid>
+                            <Grid item xs={1}>
+                            </Grid>
+                            <Grid item xs={10}>
+                                <Typography variant="body2" component="p">
+                                    {currentTicket.description}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={1}>
                             </Grid>
                         </Grid>
-                    </CardContent>
-                </Card> : <CircularProgress style={{position: 'relative'}} />}
+                        <CardContent>
+                            <Grid container spacing={1}>
+                                <Grid item xs={10}>
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <Button
+                                        style={{
+                                            backgroundColor: '#0E373D',
+                                            color: 'white'
+                                        }}
+                                        variant="outlined"
+                                        size="medium"
+                                        onClick={this.props.enableTicketsTablePage}
+                                    > Back to all tickets </Button>
+                                </Grid>
+                            </Grid>
+                        </CardContent>
+                    </Card> : <CircularProgress style={{ position: 'relative' }} />}
             </div>
         )
     }
@@ -232,6 +240,7 @@ function mapStateToProps({ isUserValid, currentTicket, sessionEmail, sessionPass
 
 function mapDispatchToProps(dispatch: any) {
     return {
+        enableErrorPage: (errorMessage: string) => dispatch(actions.enableErrorPage(errorMessage)),
         enableTicketsTablePage: () => dispatch(actions.enableTicketsTablePage()),
     }
 }
