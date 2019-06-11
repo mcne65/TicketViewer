@@ -32,6 +32,13 @@ Run the application by
 
 ### `npm run start`
 
+## Instructions on testing the project
+
+In order to test the server you need to configure the globals.json file to include the email and password
+
+### `newman run postman_collection.json -g globals.json`
+
+
 ### 
 ## Available Scripts
 
