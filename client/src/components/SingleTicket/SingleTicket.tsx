@@ -66,7 +66,7 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
             })
 
         const assigneeId = this.props.currentTicket.assignee_id
-        const assigneeName = fetch(`http://localhost:5000/api/userId/${assigneeId}/${sessionEmail}/${sessionPassword}s`)
+        const assigneeName = fetch(`http://localhost:5000/api/userId/${assigneeId}/${sessionEmail}/${sessionPassword}`)
             .then(res => res.json())
             .then(res => {
                 if (res.data.error) {
