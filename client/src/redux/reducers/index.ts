@@ -16,7 +16,7 @@ export function rootReducer(state = InitialState, action: any) {
         case 'UPDATE_TICKETS':
             return { ...state, tickets: action.content }
         case 'DISABLE_LOGIN_PAGE':
-            return { ...state, disableLoginPage: true }
+            return { ...state, disableLoginPage: true, isUserValid:true }
         case 'ENABLE_TICKETSTABLE_PAGE':
             return { ...state, viewWholeTable: true, viewSingleTicketPage: false }
         case 'ENABLE_SINGLE_TICKET_PAGE':

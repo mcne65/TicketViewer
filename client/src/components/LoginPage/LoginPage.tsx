@@ -67,6 +67,7 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
 
     public render() {
         const { email, password } = this.state
+        console.log(this.props)
         return (
             <div className={'login-page'}>
                 <Container fixed>
