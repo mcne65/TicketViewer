@@ -2,7 +2,9 @@ const InitialState = {
     isUserValid: true, 
     viewWholeTable: true, 
     viewSingleTicketPage: false,
-    disableLoginPage: false
+    disableLoginPage: false,
+    sessionEmail: '',
+    sessionPassword:''
 }
 
 
@@ -20,6 +22,8 @@ export function rootReducer(state = InitialState, action: any) {
             return { ...state, viewSingleTicketPage: true, viewWholeTable:false, currentTicket: action.payload }
         case 'RESET_APPLICATION':
             return { ...InitialState}
+        case 'UPDATE_SESSION_IDENTITY':
+            return { ...state, sessionEmail: action.email ,sessionPassword: action.password}
         default:
             return state
     }

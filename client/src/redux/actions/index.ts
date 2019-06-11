@@ -37,3 +37,11 @@ export function resetApplication():any{
         type: 'RESET_APPLICATION',
     }
 }
+
+export function updateSessionIdentity(email:string, password:string):any{
+    return{
+        type: 'UPDATE_SESSION_IDENTITY',
+        email: email,
+        password: password
+    }
+}

@@ -7,7 +7,9 @@ import * as actions from '../../redux/actions/index'
 
 interface ISingleTicketProps {
     enableTicketsTablePage: () => void
-    currentTicket: any
+    currentTicket: any,
+    sessionEmail: string,
+    sessionPassword: string
 
 }
 
@@ -32,8 +34,9 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
     }
 
     componentDidMount() {
+        const {sessionEmail, sessionPassword} = this.props
         const organisationId = this.props.currentTicket.organization_id
-        const organisationName = fetch(`http://localhost:5000/api/organisationId/${organisationId}`)
+        const organisationName = fetch(`http://localhost:5000/api/organisationId/${organisationId}/${sessionEmail}/${sessionPassword}`)
             .then(res => res.json())
             .then(res => {
                 if (res.data.error === "Couldn't authenticate you") {
@@ -46,7 +49,7 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
             })
 
         const requesterId = this.props.currentTicket.requester_id
-        const requesterName = fetch(`http://localhost:5000/api/userId/${requesterId}`)
+        const requesterName = fetch(`http://localhost:5000/api/userId/${requesterId}/${sessionEmail}/${sessionPassword}`)
             .then(res => res.json())
             .then(res => {
                 if (res.data.error === "Couldn't authenticate you") {
@@ -59,7 +62,7 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
             })
 
             const assigneeId = this.props.currentTicket.assignee_id
-            const assigneeName = fetch(`http://localhost:5000/api/userId/${assigneeId}`)
+            const assigneeName = fetch(`http://localhost:5000/api/userId/${assigneeId}/${sessionEmail}/${sessionPassword}`)
                 .then(res => res.json())
                 .then(res => {
                     if (res.data.error === "Couldn't authenticate you") {
@@ -72,7 +75,7 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
                 })
         
         const tagId = this.props.currentTicket.id
-        const tags = fetch(`http://localhost:5000/api/tags/${tagId}`)
+        const tags = fetch(`http://localhost:5000/api/tags/${tagId}/${sessionEmail}/${sessionPassword}`)
             .then(res => res.json())
             .then(res => {
                 if (res.data.error === "Couldn't authenticate you") {
@@ -223,10 +226,12 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
 }
 
 
-function mapStateToProps({ isUserValid, currentTicket }: ApplicationState) {
+function mapStateToProps({ isUserValid, currentTicket, sessionEmail, sessionPassword }: ApplicationState) {
     return {
         isUserValid,
-        currentTicket
+        currentTicket,
+        sessionEmail,
+        sessionPassword
     }
 }
 

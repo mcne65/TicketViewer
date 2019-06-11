@@ -16,7 +16,8 @@ interface ILoginPageProps {
     enableErrorPage: () => void
     disableLoginPage: () => void
     updateTicketTable: (content: any) => void
-    tickets: any
+    updateSessionIdentity: (email: string, password: string) => void
+    tickets: any,
 }
 
 class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
@@ -48,11 +49,17 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
         fetch(`http://localhost:5000/api/tickets/${email}/${password}`)
             .then(res => res.json())
             .then(res => {
-                if (res.data.error === "Couldn't authenticate you") {
+                console.log(res)
+                if (res.err) {
                     this.props.enableErrorPage()
                 } else {
-                    this.props.disableLoginPage()
-                    this.props.updateTicketTable(res.data.requests)
+                    if (res.data.error === "Couldn't authenticate you") {
+                        this.props.enableErrorPage()
+                    } else {
+                        this.props.disableLoginPage()
+                        this.props.updateTicketTable(res.data.requests)
+                        this.props.updateSessionIdentity(email, password)
+                    }
                 }
             })
     }
@@ -122,6 +129,7 @@ function mapDispatchToProps(dispatch: any) {
         enableErrorPage: () => dispatch(actions.enableErrorPage()),
         updateTicketTable: (content: any) => dispatch(actions.updateTicketTable(content)),
         disableLoginPage: () => dispatch(actions.disableLoginPage()),
+        updateSessionIdentity: (email: string, password: string) => dispatch(actions.updateSessionIdentity(email, password))
     }
 }
 

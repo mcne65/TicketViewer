@@ -45,16 +45,18 @@ app.get('/api/tickets/:email/:password', (req, res) => {
     })
 })
 
-app.get('/api/organisationId/:organisationId', (req, res) => {
+app.get('/api/organisationId/:organisationId/:email/:password', (req, res) => {
     console.log(req.params.organisationId)
     const organisationId = req.params.organisationId
+    const email = req.params.email
+    const password = req.params.password
     const apiUrl = `https://rozajaybird.zendesk.com/api/v2/organizations/${organisationId}.json` //Organisation id retrieval
     console.log(variables.email)
     console.log('hie')
     fetch(apiUrl, {
         method:'GET',
         headers: {
-            'Authorization': 'Basic ' + base64.encode(variables.email + ":" + variables.password)
+            'Authorization': 'Basic ' + base64.encode(email + ":" + password)
         }
     })
     .then(res => res.json())
@@ -66,14 +68,15 @@ app.get('/api/organisationId/:organisationId', (req, res) => {
     })
 })
 
-app.get('/api/userId/:userId', (req, res) => {
+app.get('/api/userId/:userId/:email/:password', (req, res) => {
     const userId = req.params.userId
     const apiUrl = `https://rozajaybird.zendesk.com/api/v2/users/${userId}.json` //User name retreval
-    
+    const email = req.params.email
+    const password = req.params.password
     fetch(apiUrl, {
         method:'GET',
         headers: {
-            'Authorization': 'Basic ' + base64.encode(variables.email + ":" + variables.password)
+            'Authorization': 'Basic ' + base64.encode(email + ":" + password)
         }
     })
     .then(res => res.json())
@@ -87,14 +90,15 @@ app.get('/api/userId/:userId', (req, res) => {
 
 
 
-app.get('/api/tags/:tagId', (req, res) => {
+app.get('/api/tags/:tagId/:email/:password', (req, res) => {
     const tagId = req.params.tagId
     const apiUrl = `https://rozajaybird.zendesk.com/api/v2/tickets/${tagId}/tags.json` //tags
-    
+    const email = req.params.email
+    const password = req.params.password
     fetch(apiUrl, {
         method:'GET',
         headers: {
-            'Authorization': 'Basic ' + base64.encode(variables.email + ":" + variables.password)
+            'Authorization': 'Basic ' + base64.encode(email + ":" + password)
         }
     })
     .then(res => res.json())

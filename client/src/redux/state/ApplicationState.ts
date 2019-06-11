@@ -3,7 +3,8 @@ export interface ApplicationState {
     disableLoginPage: boolean,
     viewWholeTable: boolean,
     viewSingleTicketPage: boolean,
+    sessionEmail: string,
+    sessionPassword: string,
     currentTicket?: any,
     tickets?: any
-
 }
