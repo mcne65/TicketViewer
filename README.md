@@ -57,9 +57,9 @@ In order to test the backend server you need to configure the globals.json file 
 ### 
 ## Post challenge rambles
 
-This has been a really fun project. I really enjoyed it. My approach to this problem was to design a end to end lifecycle of the application and deciding on the different UI components needed. Then after coding up the UI components it was pretty much string everything up through state management and passing api information from backend to frontend.
+This has been a really fun project. I really enjoyed it. My approach to this problem was to design a end to end lifecycle of the application first then decide on the different UI components needed. Then after coding up the UI components it was pretty much string everything up through state management and passing api information from backend to frontend.
 
-After coding up a MVP, I started writing the tests (nope unfortunately this was not TDD..). For the server side, since there were mostly apis I decided to write tests in postman then export it to my project through newman. I tested for invalidly typeed inputs, invalid inputs that generates no record and authentication errors. This helped me to go back to the front end side to account for more promise error exceptions.
+After coding up a MVP, I started writing the tests (nope unfortunately this was not TDD..). For the server side, since there were mostly apis I decided to write tests in postman then export it to my project through newman. I tested for invalidly typed inputs, invalid inputs that generates no record and authentication errors. This helped me to go back to the front end side to account for more promise error exceptions.
 
 For the UI tests, only a few checking if component renders is tested. 
 
