@@ -118,9 +118,8 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
 }
 
 
-function mapStateToProps({ isUserValid, tickets }: ApplicationState) {
+function mapStateToProps({ tickets }: ApplicationState) {
     return {
-        isUserValid,
         tickets
     }
 }
