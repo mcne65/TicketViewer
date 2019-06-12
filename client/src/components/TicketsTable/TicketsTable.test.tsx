@@ -10,7 +10,7 @@ const mountWithProvider = (children: any) => (store = mockedStore) => mount(<Pro
 
 const props = {};
 
-describe('Test for App component', () => {
+describe('Test for TicketsTable component', () => {
     it('renders without crashing', () => {
         mountWithProvider(<TicketsTable {...props} />)()
     });
