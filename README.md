@@ -33,64 +33,46 @@ Run the application by
 ### `npm run start`
 
 If all goes well the application should automatically pop up your default browser window.
-If that does not pop up, goto http://localhost:3000 to view the app
+If that does not pop up, goto [http://localhost:3000](http://localhost:3000) to view the app
 
 Type any random email and password and you should see an error pop up.
 ![Authentication Error](demo/authenticationError.gif)
 
 If the correct password and email is entered it will load the tickets table
-![Authentication Error](demo/viewWholeTable.gif)
+![View whole table](demo/viewWholeTable.gif)
 
 Click on any of the table entries to bring up single ticket view.
-![Authentication Error](demo/singleTicket.PNG)
+![View single ticket](demo/singleTicket.PNG)
 
 ## Instructions on testing the project
 
-In order to test the server you need to configure the globals.json file to include the email and password
+In order to test the front end you need to open the client folder and run the below command
+### npm run test
+
+In order to test the backend server you need to configure the globals.json file to include the email and password. (this file should have been attached in the submission email) **Please make sure the globals.json is in the root directory of server first before running the below command.**
 
 ### `newman run postman_collection.json -g globals.json`
 
 
 ### 
-## Available Scripts
+## Post challenge rambles
 
-In the project directory, you can run:
+This has been a really fun project. I really enjoyed it. My approach to this problem was to design a end to end lifecycle of the application and deciding on the different UI components needed. Then after coding up the UI components it was pretty much string everything up through state management and passing api information from backend to frontend.
 
-### `npm start`
+After coding up a MVP, I started writing the tests (nope unfortunately this was not TDD..). For the server side, since there were mostly apis I decided to write tests in postman then export it to my project through newman. I tested for invalidly typeed inputs, invalid inputs that generates no record and authentication errors. This helped me to go back to the front end side to account for more promise error exceptions.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+For the UI tests, only a few checking if component renders is tested. 
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Areas of improvement
+### Usability
+The current application is limited to one subdomain. In order to increase usability there should be another page for user to enter their own subdomain.
 
-### `npm test`
+### Security
+Currently the username and password is passed as path urls to backend then added as headers to the api call. I believe this.... is not... secure.... (I know :sob: ). Perhaps using some kind of token management method would have been more secure.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Performance
+More effort should be added on this aspect for performance. Currently all tickets are loaded on the click of sign in button. A better way of doing this is either using pagination parameters for the api or use node streams.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
