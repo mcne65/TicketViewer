@@ -9,8 +9,7 @@ const cors = require('cors')
 app.use(cors())
 
 app.get('/api/tickets/:email/:password', (req, res) => {
-    console.log('Request tickets for email'+req.params.email)
-    console.log('Request tickets for email'+req.params.password)
+    console.log('Request tickets for email '+req.params.email)
     const apiUrl = 'https://rozajaybird.zendesk.com/api/v2/requests.json'
     const email = req.params.email
     const password = req.params.password
