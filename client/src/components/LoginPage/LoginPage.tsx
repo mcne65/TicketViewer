@@ -13,7 +13,7 @@ interface ILoginPageState {
 
 
 interface ILoginPageProps {
-    enableErrorPage: (errorMessage:string) => void
+    enableErrorPage: (errorMessage: string) => void
     disableLoginPage: () => void
     updateTicketTable: (content: any) => void
     updateSessionIdentity: (email: string, password: string) => void
@@ -60,7 +60,7 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
                         this.props.updateSessionIdentity(email, password)
                     }
                 }
-            }).catch(()=>{
+            }).catch(() => {
                 this.props.enableErrorPage('Server unavailable, please contact zendesk support or try again later')
             })
     }
@@ -126,7 +126,7 @@ function mapStateToProps({ tickets }: ApplicationState) {
 
 function mapDispatchToProps(dispatch: any) {
     return {
-        enableErrorPage: (errorMessage:string) => dispatch(actions.enableErrorPage(errorMessage)),
+        enableErrorPage: (errorMessage: string) => dispatch(actions.enableErrorPage(errorMessage)),
         updateTicketTable: (content: any) => dispatch(actions.updateTicketTable(content)),
         disableLoginPage: () => dispatch(actions.disableLoginPage()),
         updateSessionIdentity: (email: string, password: string) => dispatch(actions.updateSessionIdentity(email, password))

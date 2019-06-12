@@ -27,7 +27,6 @@ class ErrorPage extends React.Component<IErrorPageProps> {
             </div>
         )
     }
-
 }
 
 function mapStateToProps({ errorMessage }: ApplicationState) {

@@ -8,10 +8,10 @@ import { Provider } from 'react-redux'
 import { rootReducer } from './redux/reducers/index'
 
 ReactDOM.render(
-<Provider store={createStore(rootReducer)}>
-<App />
-</Provider>
-, document.getElementById('root'));
+    <Provider store={createStore(rootReducer)}>
+        <App />
+    </Provider>
+    , document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

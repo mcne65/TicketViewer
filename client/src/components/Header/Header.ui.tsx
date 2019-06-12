@@ -7,7 +7,7 @@ export class Header extends React.Component<any, any> {
     public render() {
         return (
             <div className={'header'}>
-                    <img src={logo} alt={'z-logo'} />
+                <img src={logo} alt={'z-logo'} />
             </div>
         )
     }
