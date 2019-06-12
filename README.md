@@ -18,8 +18,6 @@ Run the node server file
 
 Then open a new terminal back to the same main directory
 
-### `cd ..`
-
 Open the client folder
 
 ### `cd client`
