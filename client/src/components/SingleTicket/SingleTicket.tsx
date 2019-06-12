@@ -233,9 +233,8 @@ class SingleTicket extends React.Component<ISingleTicketProps, ISingleTicketStat
 }
 
 
-function mapStateToProps({ isUserValid, currentTicket, sessionEmail, sessionPassword }: ApplicationState) {
+function mapStateToProps({ currentTicket, sessionEmail, sessionPassword }: ApplicationState) {
     return {
-        isUserValid,
         currentTicket,
         sessionEmail,
         sessionPassword
