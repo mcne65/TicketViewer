@@ -16,7 +16,7 @@ Run the node server file
 
 ### `node app.js`
 
-Then proceed back to the main directory
+Then open a new terminal back to the same main directory
 
 ### `cd ..`
 
@@ -32,12 +32,16 @@ Run the application by
 
 ### `npm run start`
 
-Goto http://localhost:3000 to view the app
+If all goes well the application should automatically pop up your default browser window.
+If that does not pop up, goto http://localhost:3000 to view the app
 
+Type any random email and password and you should see an error pop up.
 ![Authentication Error](demo/authenticationError.gif)
 
+If the correct password and email is entered it will load the tickets table
 ![Authentication Error](demo/viewWholeTable.gif)
 
+Click on any of the table entries to bring up single ticket view.
 ![Authentication Error](demo/singleTicket.PNG)
 
 ## Instructions on testing the project
