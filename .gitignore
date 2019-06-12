@@ -25,3 +25,5 @@ yarn-error.log*
 
 var.js
 server/globals.json
+client/package-lock.json
+server/package-lock.json

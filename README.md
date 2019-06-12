@@ -10,7 +10,7 @@ In order to run the project first open up the server folder
 
 Install relevant node modules
 
-### `npm install`
+### `npm install express node-fetch base-64 cors`
 
 Run the node server file
 
