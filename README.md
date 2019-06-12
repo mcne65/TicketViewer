@@ -32,6 +32,14 @@ Run the application by
 
 ### `npm run start`
 
+Goto http://localhost:3000 to view the app
+
+![Authentication Error](demo/authenticationError.gif)
+
+![Authentication Error](demo/viewWholeTable.gif)
+
+![Authentication Error](demo/singleTicket.PNG)
+
 ## Instructions on testing the project
 
 In order to test the server you need to configure the globals.json file to include the email and password
