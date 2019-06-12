@@ -12,7 +12,7 @@ interface ITicketsTableState {
 }
 
 interface ITicketsTableProps {
-    enableSingleTicketPage: (row:any) => void,
+    enableSingleTicketPage: (row: any) => void,
     resetApplication: () => void
     tickets: any,
     viewWholeTable: boolean,
@@ -70,16 +70,16 @@ class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableStat
                         <Grid container spacing={1}>
                             <Grid item xs={2}>
                                 <Button
-                                style={{ 
-                                    marginTop: '10px', 
-                
-                                    backgroundColor: '#0E373D',
-                                    color: 'white'
-                                }}
-                                variant="contained"
-                                onClick={this.props.resetApplication}
-                                > 
-                                Sign out 
+                                    style={{
+                                        marginTop: '10px',
+
+                                        backgroundColor: '#0E373D',
+                                        color: 'white'
+                                    }}
+                                    variant="contained"
+                                    onClick={this.props.resetApplication}
+                                >
+                                    Sign out
                                 </Button>
                             </Grid>
                             <Grid item xs={2}>
@@ -125,17 +125,17 @@ class TicketsTable extends React.Component<ITicketsTableProps, ITicketsTableStat
                                                                 key={row.id}
                                                                 hover
                                                                 className={'table-row'}
-                                                                onClick={()=>{
+                                                                onClick={() => {
                                                                     return this.props.enableSingleTicketPage(row)
                                                                 }}
                                                             >
                                                                 <TableCell>
                                                                     {row.id}
                                                                 </TableCell>
-                                                                <TableCell >{row.status}</TableCell>
-                                                                <TableCell>{row.subject}</TableCell>
-                                                                <TableCell>{row.created_at}</TableCell>
-                                                                <TableCell>{row.updated_at}</TableCell>
+                                                                <TableCell>{row.status ? row.status : ''}</TableCell>
+                                                                <TableCell>{row.subject ? row.subject : ''}</TableCell>
+                                                                <TableCell>{row.created_at ? row.created_at : ''}</TableCell>
+                                                                <TableCell>{row.updated_at ? row.updated_at : ''}</TableCell>
                                                             </TableRow>
                                                         ))}
                                                 {emptyRows > 0 && (
@@ -169,10 +169,8 @@ function mapStateToProps({ tickets, viewWholeTable, viewSingleTicketPage }: Appl
 
 function mapDispatchToProps(dispatch: any) {
     return {
-        enableSingleTicketPage: (row:any) => dispatch(actions.enableSingleTicketPage(row)),
+        enableSingleTicketPage: (row: any) => dispatch(actions.enableSingleTicketPage(row)),
         resetApplication: () => dispatch(actions.resetApplication()),
-        updateTicketTable: (content: any) => dispatch(actions.updateTicketTable(content)),
-        disableLoginPage: () => dispatch(actions.disableLoginPage()),
     }
 }
 
