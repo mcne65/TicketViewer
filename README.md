@@ -45,9 +45,11 @@ Click on any of the table entries to bring up single ticket view.
 ## Instructions on testing the project
 
 In order to test the front end you need to open the client folder and run the below command
-### npm run test
+### `npm run test`
 
 In order to test the backend server you need to configure the globals.json file to include the email and password. (this file should have been attached in the submission email) **Please make sure the globals.json is in the root directory of server first before running the below command.**
+
+**Also note the back end server must be running at the SAME time for test to work**
 
 ### `newman run postman_collection.json -g globals.json`
 
