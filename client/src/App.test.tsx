@@ -1,9 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { mount } from 'enzyme';
 import App from './App';
+import { Provider } from 'react-redux'
+import configureMockStore from 'redux-mock-store'
 
-describe('Examining the syntax', ()=>{
-  it('sums numbers', ()=>{
-    expect(1+2).toEqual(3)
-  })
-})
+const defaultStore = {};
+const mockedStore = configureMockStore()(defaultStore)
+const mountWithProvider = (children:any) => (store=mockedStore)=> mount(<Provider store={store}>{children}</Provider>)
+
+const props = {};
+
+describe('Test for App component', () => {
+   it('renders without crashing', () => {
+      mountWithProvider(<App {...props} />)()
+    });
+});
